@@ -14,6 +14,7 @@ interface IState {
 }
 
 interface ILocation {
+  id: number;
   name: string;
   type: LocationType;
   state: IState;
@@ -25,6 +26,8 @@ interface ILocation {
 }
 
 class ParkLocation {
+  id: number;
+
   name: string;
 
   type: LocationType;
@@ -35,12 +38,22 @@ class ParkLocation {
 
   outline: [number, number][];
 
+  rating?: number;
+
+  yourComment?: string;
+
+  yourVisit?: string;
+
   constructor(location: ILocation) {
+    this.id = location.id;
     this.name = location.name;
     this.type = location.type;
     this.state = location.state;
     this.coords = location.coords;
     this.outline = location.outline;
+    this.rating = location.rating;
+    this.yourComment = location.yourComment;
+    this.yourVisit = location.yourVisit;
   }
 }
 
