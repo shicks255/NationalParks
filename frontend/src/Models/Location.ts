@@ -18,7 +18,9 @@ interface ILocation {
   name: string;
   type: LocationType;
   state: IState;
-  coords: [number, number];
+  // coords: [number, number];
+  latitude: number;
+  longitude: number;
   outline: [number, number][];
   rating?: number;
   yourComment?: string;
@@ -34,7 +36,11 @@ class ParkLocation {
 
   state: IState;
 
-  coords: [number, number];
+  // coords: [number, number];
+  //
+  latitude: number;
+
+  longitude: number;
 
   outline: [number, number][];
 
@@ -49,7 +55,9 @@ class ParkLocation {
     this.name = location.name;
     this.type = location.type;
     this.state = location.state;
-    this.coords = location.coords;
+    this.longitude = location.longitude;
+    this.latitude = location.latitude;
+    // this.coords = location.coords;
     this.outline = location.outline;
     this.rating = location.rating;
     this.yourComment = location.yourComment;

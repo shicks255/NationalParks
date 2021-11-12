@@ -1,5 +1,5 @@
-import React from 'react';
-import { parkTypes, states } from '../Constants';
+import React from "react";
+import { parkTypes, states } from "../Constants";
 
 interface IProps {
   filters: { [key: string]: boolean };

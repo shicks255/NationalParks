@@ -1,20 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useReducer, useState } from 'react';
-import './App.css';
-import Map from './components/Map';
-import ParkFilter from './components/ParkFilter';
-import EditVisit from './components/EditVisit';
-import { parkTypes } from './Constants';
+import React, { useReducer, useState } from "react";
+import "./App.css";
+import { useAuth0 } from "@auth0/auth0-react";
+import Map from "./components/Map";
+import ParkFilter from "./components/ParkFilter";
+import EditVisit from "./components/EditVisit";
+import { parkTypes } from "./Constants";
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function App() {
   const [expandedMenu, setExpandedMenu] = useState(false);
+  const { handleRedirectCallback } = useAuth0();
 
-  let hamburgerClass = 'hamburger';
-  let shelfClass = 'shelf-container';
+  let hamburgerClass = "hamburger";
+  let shelfClass = "shelf-container";
   if (expandedMenu) {
-    hamburgerClass += ' active';
-    shelfClass += ' active';
+    hamburgerClass += " active";
+    shelfClass += " active";
   }
 
   function toggleBurger(): void {
@@ -58,30 +60,8 @@ function App() {
       <header className="header">
         <nav className="navbar">
           <a href="#" className="nav-logo">
-            WebDev.
+            Nat Parks
           </a>
-          <ul className="nav-menu active">
-            {/* <li className="nav-item"> */}
-            {/*  <a href="#" className="nav-link"> */}
-            {/*    Services */}
-            {/*  </a> */}
-            {/* </li> */}
-            {/* <li className="nav-item"> */}
-            {/*  <a href="#" className="nav-link"> */}
-            {/*    Blog */}
-            {/*  </a> */}
-            {/* </li> */}
-            {/* <li className="nav-item"> */}
-            {/*  <a href="#" className="nav-link"> */}
-            {/*    About */}
-            {/*  </a> */}
-            {/* </li> */}
-            {/* <li className="nav-item"> */}
-            {/*  <a href="#" className="nav-link"> */}
-            {/*    Contact */}
-            {/*  </a> */}
-            {/* </li> */}
-          </ul>
           <div className={hamburgerClass}>
             <button type="button" onClick={toggleBurger}>
               <span className="bar" />
@@ -93,7 +73,7 @@ function App() {
       </header>
 
       <div className="map-container">
-        <Map />
+        <Map filters={filters} />
       </div>
     </div>
   );

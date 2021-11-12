@@ -1,15 +1,24 @@
-import React, { FC } from 'react';
-import { Marker, Polygon, Popup } from 'react-leaflet';
-import L from 'leaflet';
-import icon from 'leaflet/dist/images/marker-icon.png';
-import { ParkLocation } from '../Models/Location';
+import React, { FC } from "react";
+import { Marker, Polygon, Popup } from "react-leaflet";
+import L, { LatLngTuple } from "leaflet";
+import icon from "leaflet/dist/images/marker-icon.png";
+import { ParkLocation } from "../Models/Location";
 
 interface IProps {
   park: ParkLocation;
 }
 
 const Park: FC<IProps> = ({
-  park: { id, coords, name, rating, yourComment, yourVisit, outline },
+  park: {
+    id,
+    latitude,
+    longitude,
+    name,
+    rating,
+    yourComment,
+    yourVisit,
+    outline,
+  },
 }: IProps) => {
   const ic = L.icon({
     iconUrl: icon,
@@ -18,6 +27,9 @@ const Park: FC<IProps> = ({
   });
   // const { park.id, park.coords, park.name, park.rating, park.yourComment, park.yourVisit, park.outline } =
   //   park;
+
+  const coords: LatLngTuple = [latitude, longitude];
+  console.log(id);
   return (
     <>
       <Marker key={id} position={coords} icon={ic}>
@@ -33,7 +45,7 @@ const Park: FC<IProps> = ({
           </div>
         </Popup>
       </Marker>
-      <Polygon positions={outline} />
+      {outline && <Polygon positions={outline} />}
     </>
   );
 };

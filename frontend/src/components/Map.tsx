@@ -1,25 +1,71 @@
-import React from 'react';
-import { MapContainer, Marker, Polygon, Popup, TileLayer } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import { LocationType, ParkLocation, State } from '../Models/Location';
-import { User } from '../Models/User';
-import { IUserVisit, UserVisit } from '../Models/UserVisit';
-import Park from './Park';
-import ParkFilter from './ParkFilter';
-import EditVisit from './EditVisit';
-import { getParks, getUser, getUserVisits } from '../ParksApi';
+import React, { FC, useEffect, useState } from "react";
+import { MapContainer, TileLayer } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import { useAuth0 } from "@auth0/auth0-react";
+import { UserVisit } from "../Models/UserVisit";
+import Park from "./Park";
+import { getParks, getUser, getUserVisits } from "../ParksApi";
+import { ParkLocation } from "../Models/Location";
+import { User } from "../Models/User";
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export default function Map() {
-  const user = getUser();
-  const userVisits = getUserVisits();
-  const locations = getParks();
+interface IProps {
+  filters: { [key: string]: boolean };
+}
+
+const Map: FC<IProps> = (props: IProps) => {
+  const { filters } = props;
+  const [user, setUser] = useState<User | undefined>(undefined);
+  const [userVisits, setUserVisits] = useState<UserVisit[]>();
+  const [parks, setParks] = useState<ParkLocation[]>();
+  const LoginButton = () => {
+    const { loginWithRedirect } = useAuth0();
+    return (
+      <button type="button" onClick={() => loginWithRedirect()}>
+        Login
+      </button>
+    );
+  };
+
+  const LogoutButton = () => {
+    const { logout } = useAuth0();
+    return (
+      <button
+        type="button"
+        onClick={() => logout({ returnTo: window.location.origin })}
+      >
+        Logout
+      </button>
+    );
+  };
+
+  const userAuthenticated = useAuth0().isAuthenticated;
+
+  useEffect(() => {
+    getUserVisits().then((res) => {
+      setUserVisits(res);
+    });
+  }, []);
+
+  useEffect(() => {
+    getParks().then((res) => {
+      setParks(res);
+    });
+  }, []);
+
+  useEffect(() => {
+    setUser(getUser);
+  }, []);
+
+  if (!userVisits || !parks) {
+    return <div> Loading : ) </div>;
+  }
+
+  const filteredParks = parks.filter((pa) => !filters[pa.type]);
 
   const parkVisitMap = userVisits.reduce<Record<number, UserVisit>>(
     (pre, curr) => {
       // eslint-disable-next-line no-param-reassign
       pre[curr.parkId] = curr;
-
       return pre;
     },
     {}
@@ -35,7 +81,7 @@ export default function Map() {
         <MapContainer
           center={[41.878, -87.629]}
           zoom={5}
-          style={{ height: '80vh' }}
+          style={{ height: "80vh" }}
         >
           <TileLayer
             attribution="Map tiles by <a href=http://stamen.com>Stamen Design</a>, under <a href=http://creativecommons.org/licenses/by/3.0>CC BY 3.0</a>. Data by <a href=http://openstreetmap.org>OpenStreetMap</a>, under <a href=http://www.openstreetmap.org/copyright>ODbL</a>."
@@ -46,15 +92,22 @@ export default function Map() {
           {/*  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" */}
           {/* /> */}
 
-          {locations.map((loc) => (
+          {filteredParks.map((loc) => (
             <Park key={loc.id} park={loc} />
           ))}
         </MapContainer>
       </div>
       <div>
-        {/* noneLoggedInUserVisit */}
-        <p>Log in or create an account to start tracking your visits!</p>
+        {!userAuthenticated && (
+          <>
+            <p>Log in or create an account to start tracking your visits!</p>
+            <LoginButton />
+          </>
+        )}
+        {userAuthenticated && <LogoutButton />}
       </div>
     </div>
   );
-}
+};
+
+export default Map;
