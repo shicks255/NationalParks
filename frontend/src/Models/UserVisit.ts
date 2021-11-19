@@ -1,17 +1,17 @@
 interface IUserVisit {
-  userId: number;
+  userId: string;
   parkId: number;
-  rating?: number;
+  rating?: string;
   comment?: string;
   visited?: string;
 }
 
 class UserVisit {
-  userId: number;
+  userId: string;
 
   parkId: number;
 
-  rating?: number;
+  rating?: string;
 
   comment?: string;
 

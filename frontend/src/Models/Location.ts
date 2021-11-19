@@ -17,6 +17,7 @@ interface ILocation {
   id: number;
   name: string;
   type: LocationType;
+  code: string | undefined;
   state: IState;
   // coords: [number, number];
   latitude: number;
@@ -33,6 +34,8 @@ class ParkLocation {
   name: string;
 
   type: LocationType;
+
+  code: string | undefined;
 
   state: IState;
 
@@ -55,6 +58,7 @@ class ParkLocation {
     this.name = location.name;
     this.type = location.type;
     this.state = location.state;
+    this.code = location.code;
     this.longitude = location.longitude;
     this.latitude = location.latitude;
     // this.coords = location.coords;

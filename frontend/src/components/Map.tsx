@@ -1,12 +1,12 @@
-import React, { FC, useEffect, useState } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import { useAuth0 } from "@auth0/auth0-react";
-import { UserVisit } from "../Models/UserVisit";
-import Park from "./Park";
-import { getParks, getUser, getUserVisits } from "../ParksApi";
-import { ParkLocation } from "../Models/Location";
-import { User } from "../Models/User";
+import React, { FC, useEffect, useState } from 'react';
+import { MapContainer, TileLayer } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import { useAuth0 } from '@auth0/auth0-react';
+import { UserVisit } from '../Models/UserVisit';
+import Park from './Park';
+import { getParks, getUser, getUserVisits } from '../ParksApi';
+import { ParkLocation } from '../Models/Location';
+import { User } from '../Models/User';
 
 interface IProps {
   filters: { [key: string]: boolean };
@@ -14,17 +14,15 @@ interface IProps {
 
 const Map: FC<IProps> = (props: IProps) => {
   const { filters } = props;
-  const [user, setUser] = useState<User | undefined>(undefined);
+  // const [user, setUser] = useState<User | undefined>(undefined);
   const [userVisits, setUserVisits] = useState<UserVisit[]>();
   const [parks, setParks] = useState<ParkLocation[]>();
-  const LoginButton = () => {
-    const { loginWithRedirect } = useAuth0();
-    return (
-      <button type="button" onClick={() => loginWithRedirect()}>
-        Login
-      </button>
-    );
-  };
+  const { loginWithRedirect, user } = useAuth0();
+  const LoginButton = () => (
+    <button type="button" onClick={() => loginWithRedirect()}>
+      Login
+    </button>
+  );
 
   const LogoutButton = () => {
     const { logout } = useAuth0();
@@ -41,10 +39,14 @@ const Map: FC<IProps> = (props: IProps) => {
   const userAuthenticated = useAuth0().isAuthenticated;
 
   useEffect(() => {
-    getUserVisits().then((res) => {
-      setUserVisits(res);
-    });
-  }, []);
+    console.log('getting user');
+    if (user) {
+      getUserVisits(user?.sub?.slice(6) ?? '').then((res) => {
+        console.log(res);
+        setUserVisits(res);
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     getParks().then((res) => {
@@ -52,24 +54,23 @@ const Map: FC<IProps> = (props: IProps) => {
     });
   }, []);
 
-  useEffect(() => {
-    setUser(getUser);
-  }, []);
-
-  if (!userVisits || !parks) {
+  if (!parks) {
     return <div> Loading : ) </div>;
   }
 
   const filteredParks = parks.filter((pa) => !filters[pa.type]);
 
-  const parkVisitMap = userVisits.reduce<Record<number, UserVisit>>(
-    (pre, curr) => {
+  let parkVisitMap: Record<number, UserVisit> = {};
+
+  if (userVisits) {
+    parkVisitMap = userVisits.reduce<Record<number, UserVisit>>((pre, curr) => {
       // eslint-disable-next-line no-param-reassign
       pre[curr.parkId] = curr;
       return pre;
-    },
-    {}
-  );
+    }, {});
+  }
+
+  console.log(parkVisitMap);
 
   return (
     <div>
@@ -81,7 +82,7 @@ const Map: FC<IProps> = (props: IProps) => {
         <MapContainer
           center={[41.878, -87.629]}
           zoom={5}
-          style={{ height: "80vh" }}
+          style={{ height: '80vh' }}
         >
           <TileLayer
             attribution="Map tiles by <a href=http://stamen.com>Stamen Design</a>, under <a href=http://creativecommons.org/licenses/by/3.0>CC BY 3.0</a>. Data by <a href=http://openstreetmap.org>OpenStreetMap</a>, under <a href=http://www.openstreetmap.org/copyright>ODbL</a>."
@@ -93,7 +94,7 @@ const Map: FC<IProps> = (props: IProps) => {
           {/* /> */}
 
           {filteredParks.map((loc) => (
-            <Park key={loc.id} park={loc} />
+            <Park key={loc.id} park={loc} userVisit={parkVisitMap[loc.id]} />
           ))}
         </MapContainer>
       </div>
