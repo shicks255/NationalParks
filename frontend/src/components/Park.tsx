@@ -1,11 +1,10 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
-import { Marker, Polygon, Popup } from 'react-leaflet';
+import React, { FC, useState } from 'react';
+import { Marker, Polygon } from 'react-leaflet';
 import L, { LatLngTuple } from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
-import { useAuth0 } from '@auth0/auth0-react';
 import { ParkLocation } from '../Models/Location';
 import { UserVisit } from '../Models/UserVisit';
-import { saveUserVisit, getParkInfo } from '../ParksApi';
+import { getParkInfo } from '../ParksApi';
 import ParkPopup, { IDetails } from './ParkPopup';
 
 interface IProps {
@@ -29,8 +28,7 @@ const Park: FC<IProps> = ({ park, userVisit }: IProps) => {
 
   function getDetails() {
     if (code) {
-      const parxData = getParkInfo(code).then((data) => {
-        console.log(data);
+      getParkInfo(code).then((data) => {
         setParkDetails(data);
       });
     }

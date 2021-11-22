@@ -39,10 +39,8 @@ const Map: FC<IProps> = (props: IProps) => {
   const userAuthenticated = useAuth0().isAuthenticated;
 
   useEffect(() => {
-    console.log('getting user');
     if (user) {
       getUserVisits(user?.sub?.slice(6) ?? '').then((res) => {
-        console.log(res);
         setUserVisits(res);
       });
     }
@@ -58,7 +56,7 @@ const Map: FC<IProps> = (props: IProps) => {
     return <div> Loading : ) </div>;
   }
 
-  const filteredParks = parks.filter((pa) => !filters[pa.type]);
+  const filteredParks = parks.filter((pa) => filters[pa.type]);
 
   let parkVisitMap: Record<number, UserVisit> = {};
 
@@ -69,8 +67,6 @@ const Map: FC<IProps> = (props: IProps) => {
       return pre;
     }, {});
   }
-
-  console.log(parkVisitMap);
 
   return (
     <div>

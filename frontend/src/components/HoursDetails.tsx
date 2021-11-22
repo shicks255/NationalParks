@@ -35,28 +35,35 @@ const HoursDetails: FC<IProps> = (props: IProps) => {
     <div>
       <span>{details[0].description}</span>
       <br />
-      <table>
+      <table style={{ border: '1px solid black' }}>
         <tbody>
           <tr>
-            <td>Monday {details[0].standardHours.monday}</td>
+            <td>Monday</td>
+            <td>{details[0].standardHours.monday}</td>
           </tr>
           <tr>
-            <td>Tuesday {details[0].standardHours.tuesday}</td>
+            <td>Tuesday</td>
+            <td>{details[0].standardHours.tuesday}</td>
           </tr>
           <tr>
-            <td>Wednesday {details[0].standardHours.wednesday}</td>
+            <td>Wednesday</td>
+            <td>{details[0].standardHours.wednesday}</td>
           </tr>
           <tr>
-            <td>Thursday {details[0].standardHours.thursday}</td>
+            <td>Thursday</td>
+            <td>{details[0].standardHours.thursday}</td>
           </tr>
           <tr>
-            <td>Friday {details[0].standardHours.friday}</td>
+            <td>Friday</td>
+            <td>{details[0].standardHours.friday}</td>
           </tr>
           <tr>
-            <td>Saturday {details[0].standardHours.saturday}</td>
+            <td>Saturday</td>
+            <td>{details[0].standardHours.saturday}</td>
           </tr>
           <tr>
-            <td>Sunday {details[0].standardHours.sunday}</td>
+            <td>Sunday</td>
+            <td>{details[0].standardHours.sunday}</td>
           </tr>
         </tbody>
       </table>

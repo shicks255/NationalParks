@@ -1,5 +1,5 @@
-import React from "react";
-import { parkTypes, states } from "../Constants";
+import React from 'react';
+import { parkTypes, states } from '../Constants';
 
 interface IProps {
   filters: { [key: string]: boolean };
@@ -11,7 +11,7 @@ const ParkFilter: React.FC<IProps> = (props: IProps) => {
   return (
     <>
       <div className="shelf-menu">
-        <b>Hide</b>
+        <b>Show</b>
       </div>
       <table>
         <tbody>

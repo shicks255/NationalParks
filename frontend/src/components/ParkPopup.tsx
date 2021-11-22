@@ -1,15 +1,15 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-import React, { FC, useCallback, useEffect, useState } from 'react';
-import { Marker, Polygon, Popup } from 'react-leaflet';
+import React, { FC, useState } from 'react';
+import { Popup } from 'react-leaflet';
 import L, { LatLngTuple } from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import { useAuth0 } from '@auth0/auth0-react';
-import { posix } from 'path';
 import { ParkLocation } from '../Models/Location';
 import { UserVisit } from '../Models/UserVisit';
-import { saveUserVisit, getParkInfo } from '../ParksApi';
+import { saveUserVisit } from '../ParksApi';
 import CollapsibleBox from './CollapsibleBox';
 import HoursDetails, { IOperatingHours } from './HoursDetails';
+import FeesDetails, { IEntranceFee } from './FeesDetails';
+import ImageDetails from './ImageDetails';
 
 interface IProps {
   park: ParkLocation;
@@ -72,12 +72,6 @@ interface IPhoneNumber {
   phoneNumber: string;
 }
 
-interface IEntranceFee {
-  cost: string;
-  description: string;
-  title: string;
-}
-
 interface IParkImage {
   altText: string;
   caption: string;
@@ -105,7 +99,7 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
     visited: '',
   };
 
-  const { loginWithRedirect, user } = useAuth0();
+  const { user } = useAuth0();
   const [isEditing, setIsEditing] = useState(false);
   const [newRating, setNewRating] = useState(rating);
   const [newComment, setNewComment] = useState(comment);
@@ -126,7 +120,6 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
   // }, []);
 
   function saveVisit() {
-    console.log(user);
     const newUserVisit: UserVisit = {
       userId: user?.sub?.slice(6) ?? '',
       parkId: id,
@@ -135,7 +128,6 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
       comment: newComment,
     };
 
-    console.log(`saving user visit ${JSON.stringify(newUserVisit)}`);
     saveUserVisit(newUserVisit);
   }
 
@@ -221,6 +213,13 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
               </CollapsibleBox>
             )}
             <br />
+            {details && (
+              <CollapsibleBox title="Cost">
+                <FeesDetails fees={details.entranceFees} />
+              </CollapsibleBox>
+            )}
+            <br />
+            {details && <ImageDetails images={details?.images} />}
             Avg Rating {rating}
             <br />
             {user && (
@@ -249,5 +248,5 @@ Park.defaultProps = {
   },
 };
 
-export type { IDetails };
+export type { IDetails, IParkImage };
 export default Park;
