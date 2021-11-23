@@ -19,7 +19,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.park = require("./park")(sequelize, Sequelize);
-db.user = require("./user")(sequelize, Sequelize);
+// db.user = require("./user")(sequelize, Sequelize);
 db.user_visit = require("./userVisit")(sequelize, Sequelize);
 
 module.exports = db;

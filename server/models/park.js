@@ -5,7 +5,10 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
       primaryKey: true,
     },
-    title: {
+    name: {
+      type: Sequelize.STRING,
+    },
+    code: {
       type: Sequelize.STRING,
     },
     type: {
@@ -21,7 +24,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.DECIMAL,
     },
     outline: {
-      type: Sequelize.STRING,
+      type: Sequelize.ARRAY(Sequelize.ARRAY(Sequelize.DECIMAL)),
     },
   });
 

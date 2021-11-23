@@ -94,15 +94,15 @@ const Map: FC<IProps> = (props: IProps) => {
           ))}
         </MapContainer>
       </div>
-      <div>
-        {!userAuthenticated && (
-          <>
-            <p>Log in or create an account to start tracking your visits!</p>
-            <LoginButton />
-          </>
-        )}
-        {userAuthenticated && <LogoutButton />}
-      </div>
+      {/* <div> */}
+      {/*  {!userAuthenticated && ( */}
+      {/*    <> */}
+      {/*      <p>Log in or create an account to start tracking your visits!</p> */}
+      {/*      <LoginButton /> */}
+      {/*    </> */}
+      {/*  )} */}
+      {/*  {userAuthenticated && <LogoutButton />} */}
+      {/* </div> */}
     </div>
   );
 };

@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     userId: {
       //foreign key of User
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
     },
     parkId: {
       //foreign key of Park

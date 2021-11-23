@@ -5,13 +5,22 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "copy": "copyfiles -u 1 ./config/* ./models/* \\\\thinkcentre\\caddy\\natparks"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "copyfiles": "^2.4.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "exceljs": "^4.3.0",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "passport": "^0.5.0",
+    "passport-auth0": "^1.4.1",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.9.0"
