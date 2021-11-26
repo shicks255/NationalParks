@@ -57,5 +57,4 @@ async function saveUserVisit(userVisit: UserVisit) {
   console.log(response.json());
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export { getParks, getUser, getUserVisits, saveUserVisit, getParkInfo };

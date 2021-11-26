@@ -12,11 +12,14 @@ import useRecordSignup from './RecordSignup';
 //   useRecordSignup();
 // };
 
+const auth0Domain = process.env.REACT_APP_AUTH0_DOMAIN ?? '';
+const auth0ClientId = process.env.REACT_APP_AUTH0_CLIENT_ID ?? '';
+
 ReactDOM.render(
   <React.StrictMode>
     <Auth0Provider
-      domain={process.env.REACT_APP_AUTH0_DOMAIN!}
-      clientId={process.env.REACT_APP_AUTH0_CLIENT_ID!}
+      domain={auth0Domain}
+      clientId={auth0ClientId}
       redirectUri={window.location.origin}
       // onRedirectCallback={useRecordSignup}
     >
