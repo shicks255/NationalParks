@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useReducer, useState } from 'react';
 import './App.css';
 // import { useAuth0 } from '@auth0/auth0-react';
@@ -7,7 +6,6 @@ import ParkFilter from './components/ParkFilter';
 import EditVisit from './components/EditVisit';
 import { parkTypes } from './Constants';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function App() {
   const [expandedMenu, setExpandedMenu] = useState(false);
   // const { handleRedirectCallback } = useAuth0();
@@ -59,7 +57,7 @@ function App() {
       </div>
       <header className="header">
         <nav className="navbar">
-          <a href="#" className="nav-logo">
+          <a href="#/" className="nav-logo">
             Nat Parks
           </a>
           <div className={hamburgerClass}>

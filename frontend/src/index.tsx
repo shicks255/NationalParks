@@ -1,9 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import { AppState, Auth0Provider, useAuth0 } from "@auth0/auth0-react";
-import App from "./App";
-import useRecordSignup from "./RecordSignup";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import { AppState, Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+import App from './App';
+import useRecordSignup from './RecordSignup';
 // import reportWebVitals from './reportWebVitals';
 
 // const redirectCallback = (appState: AppState) => {
@@ -23,7 +23,7 @@ ReactDOM.render(
       <App />
     </Auth0Provider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
