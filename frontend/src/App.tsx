@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useCallback, useReducer, useState } from 'react';
 import './App.css';
 // import { useAuth0 } from '@auth0/auth0-react';
 import Map from './components/Map';
@@ -39,19 +39,21 @@ function App() {
 
   const [filters, dispatch] = useReducer(reducer, defaultFilters);
 
-  function toggleFilter(parkType: string): void {
-    const shown = filters[parkType];
-    const mergingState: { [key: string]: boolean } = {};
-    mergingState[parkType] = !shown;
-    dispatch(mergingState);
-  }
+  const toggleFilter = useCallback(
+    (parkType: string) => {
+      const shown = filters[parkType];
+      const mergingState: { [key: string]: boolean } = {};
+      mergingState[parkType] = !shown;
+      dispatch(mergingState);
+    },
+    [filters]
+  );
 
   return (
     <div className="App">
       <div className={shelfClass}>
         <div className="shelf-content">
-          {/* <EditVisit /> */}
-          {/* eslint-disable-next-line react/jsx-no-bind */}
+          <EditVisit />
           <ParkFilter filters={filters} toggleFunc={toggleFilter} />
         </div>
       </div>
