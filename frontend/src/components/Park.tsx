@@ -6,6 +6,7 @@ import { ParkLocation } from '../Models/Location';
 import { UserVisit } from '../Models/UserVisit';
 import { getParkInfo } from '../ParksApi';
 import ParkPopup, { IDetails } from './ParkPopup';
+import useAnalytics from '../hooks/useAnalytics';
 
 interface IProps {
   park: ParkLocation;
@@ -19,6 +20,8 @@ const Park: FC<IProps> = ({ park, userVisit }: IProps) => {
     // iconAnchor: [0, 35],
   });
 
+  const { sendParkClick } = useAnalytics();
+
   const [parkDetails, setParkDetails] = useState<IDetails | undefined>(
     undefined
   );
@@ -28,6 +31,7 @@ const Park: FC<IProps> = ({ park, userVisit }: IProps) => {
 
   function getDetails() {
     if (code) {
+      sendParkClick(code);
       getParkInfo(code).then((data) => {
         setParkDetails(data);
       });

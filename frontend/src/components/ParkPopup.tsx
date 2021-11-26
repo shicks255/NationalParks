@@ -191,15 +191,16 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
                 Edit
               </button>
             )}
-            <b>{name}</b>
+            <b>
+              {name}
+              {details && (
+                <a href={details.url} target="_blank" rel="noreferrer">
+                  &amp;
+                </a>
+              )}
+            </b>
             <br />
-            {details && details.description}
-            <br />
-            {details && (
-              <a href={details.url} target="_blank" rel="noreferrer">
-                Link
-              </a>
-            )}
+            <blockquote>{details && details.description}</blockquote>
             <br />
             {details && (
               <CollapsibleBox title="Hours">
