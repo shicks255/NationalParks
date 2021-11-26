@@ -4,6 +4,7 @@ import { UserVisit } from './Models/UserVisit';
 import { IDetails } from './components/ParkPopup';
 
 const apiKey = process.env.NPS_API_KEY;
+const apiUrl = 'https://parksapi.shicks255.com';
 
 function getUser(): User {
   return new User({
@@ -26,19 +27,19 @@ async function getParkInfo(code: string): Promise<IDetails> {
 }
 
 async function getUserVisits(userId: string): Promise<UserVisit[]> {
-  const response = await fetch(`http://localhost:3001/api/userVisit/${userId}`);
+  const response = await fetch(`${apiUrl}/api/userVisit/${userId}`);
   const visits = response.json();
   return visits;
 }
 
 async function getParks(): Promise<ParkLocation[]> {
-  const response = await fetch('http://localhost:3001/api/parks');
+  const response = await fetch(`${apiUrl}/api/parks`);
   const parks = response.json();
   return parks;
 }
 
 async function saveUserVisit(userVisit: UserVisit): Promise<IUser> {
-  const response = await fetch(`http://localhost:3001/api/userVisit`, {
+  const response = await fetch(`${apiUrl}/api/userVisit`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
