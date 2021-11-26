@@ -1,7 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Popup } from 'react-leaflet';
-import L, { LatLngTuple } from 'leaflet';
-import icon from 'leaflet/dist/images/marker-icon.png';
+import { LatLngTuple } from 'leaflet';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ParkLocation } from '../Models/Location';
 import { UserVisit } from '../Models/UserVisit';
@@ -86,13 +85,13 @@ interface ITopic {
 }
 
 const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
-  const ic = L.icon({
-    iconUrl: icon,
-    iconSize: [15, 25],
-    // iconAnchor: [0, 35],
-  });
+  // const ic = L.icon({
+  //   iconUrl: icon,
+  //   iconSize: [15, 25],
+  //   iconAnchor: [0, 35],
+  // });
 
-  const { id, name, latitude, longitude, outline, code } = park;
+  const { id, name, latitude, longitude } = park;
   const { rating, comment, visited } = userVisit ?? {
     rating: '',
     comment: '',
@@ -104,8 +103,6 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
   const [newRating, setNewRating] = useState(rating);
   const [newComment, setNewComment] = useState(comment);
   const [newVisitDate, setNewVisitDate] = useState(visited);
-  const [parkInfo, setParkInfo] = useState({});
-  const [isOpen, setIsOpen] = useState(false);
 
   // const getDetails = useCallback(() => {
   //   console.log('getting details');
@@ -138,6 +135,7 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
       {isEditing ? (
         <Popup>
           <div>
+            {coords}
             <b>{name}</b>
             <form>
               <fieldset>

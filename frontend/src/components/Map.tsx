@@ -4,9 +4,8 @@ import 'leaflet/dist/leaflet.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { UserVisit } from '../Models/UserVisit';
 import Park from './Park';
-import { getParks, getUser, getUserVisits } from '../ParksApi';
+import { getParks, getUserVisits } from '../ParksApi';
 import { ParkLocation } from '../Models/Location';
-import { User } from '../Models/User';
 
 interface IProps {
   filters: { [key: string]: boolean };
@@ -81,11 +80,17 @@ const Map: FC<IProps> = (props: IProps) => {
           style={{ height: '80vh' }}
         >
           <TileLayer
-            attribution="Map tiles by <a href=http://stamen.com>Stamen Design</a>, under <a href=http://creativecommons.org/licenses/by/3.0>CC BY 3.0</a>. Data by <a href=http://openstreetmap.org>OpenStreetMap</a>, under <a href=http://www.openstreetmap.org/copyright>ODbL</a>."
-            url="https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png"
+            attribution="Map tiles by <a href=http://stamen.com>Stamen
+            Design</a>, under <a href=http://creativecommons.org/lice
+            nses/by/3.0>CC BY 3.0</a>. Data by <a href=http://openstre
+            etmap.org>OpenStreetMap</a>, under <a href=http://www.open
+            streetmap.org/copyright>ODbL</a>."
+            url="https://stamen-tiles-{s}.a.ssl.fastly.net/terrain
+            /{z}/{x}/{y}.png"
           />
           {/* <TileLayer */}
-          {/*  attribution="&copy; <a href=http://osm.org/copyright>OpenStreetMap</a> contributors" */}
+          {/*  attribution="&copy; <a href=http://osm.org/copyright>
+          OpenStreetMap</a> contributors" */}
           {/*  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" */}
           {/* /> */}
 
@@ -94,15 +99,15 @@ const Map: FC<IProps> = (props: IProps) => {
           ))}
         </MapContainer>
       </div>
-      {/* <div> */}
-      {/*  {!userAuthenticated && ( */}
-      {/*    <> */}
-      {/*      <p>Log in or create an account to start tracking your visits!</p> */}
-      {/*      <LoginButton /> */}
-      {/*    </> */}
-      {/*  )} */}
-      {/*  {userAuthenticated && <LogoutButton />} */}
-      {/* </div> */}
+      <div>
+        {false && !userAuthenticated && (
+          <>
+            <p>Log in or create an account to start tracking your visits!</p>
+            <LoginButton />
+          </>
+        )}
+        {false && userAuthenticated && <LogoutButton />}
+      </div>
     </div>
   );
 };

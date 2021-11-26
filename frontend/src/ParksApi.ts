@@ -1,5 +1,5 @@
 import { ParkLocation } from './Models/Location';
-import { User } from './Models/User';
+import { IUser, User } from './Models/User';
 import { UserVisit } from './Models/UserVisit';
 import { IDetails } from './components/ParkPopup';
 
@@ -37,14 +37,16 @@ async function getParks(): Promise<ParkLocation[]> {
   return parks;
 }
 
-async function saveUserVisit(userVisit: UserVisit) {
-  await fetch(`http://localhost:3001/api/userVisit`, {
+async function saveUserVisit(userVisit: UserVisit): Promise<IUser> {
+  const response = await fetch(`http://localhost:3001/api/userVisit`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(userVisit),
   });
+  const user = response.json();
+  return user;
 }
 
 export { getParks, getUser, getUserVisits, saveUserVisit, getParkInfo };

@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from 'react';
+import React, { useCallback, useReducer, useState, FC } from 'react';
 import './App.css';
 // import { useAuth0 } from '@auth0/auth0-react';
 import Map from './components/Map';
@@ -6,7 +6,7 @@ import ParkFilter from './components/ParkFilter';
 import EditVisit from './components/EditVisit';
 import { parkTypes } from './Constants';
 
-function App() {
+const App: FC = () => {
   const [expandedMenu, setExpandedMenu] = useState(false);
   // const { handleRedirectCallback } = useAuth0();
 
@@ -77,6 +77,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;

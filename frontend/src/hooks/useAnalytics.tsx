@@ -1,5 +1,3 @@
-import React from 'react';
-
 declare global {
   interface Window {
     gtag: (...args: unknown[]) => void;
@@ -26,7 +24,13 @@ function sendParkTypeHide(parkType: string) {
   });
 }
 
-function useAnalytics() {
+interface Props {
+  sendParkClick: (code: string) => void;
+  sendLogin: (email: string) => void;
+  sendParkTypeHide: (type: string) => void;
+}
+
+function useAnalytics(): Props {
   return {
     sendParkClick,
     sendLogin,
