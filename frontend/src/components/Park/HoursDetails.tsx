@@ -31,9 +31,13 @@ interface IHours {
 const HoursDetails: FC<IProps> = (props: IProps) => {
   const { details } = props;
 
+  if (!details || details.length < 1) {
+    return <></>;
+  }
+
   return (
     <div>
-      <span>{details[0].description}</span>
+      <span data-testid="hours-label">{details[0].description}</span>
       <br />
       <table style={{ border: '1px solid black' }}>
         <tbody>

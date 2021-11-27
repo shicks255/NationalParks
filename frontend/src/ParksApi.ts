@@ -1,7 +1,7 @@
 import { ParkLocation } from './Models/Location';
 import { IUser, User } from './Models/User';
 import { UserVisit } from './Models/UserVisit';
-import { IDetails } from './components/ParkPopup';
+import { IDetails } from './components/Park/ParkPopup';
 
 const apiKey = process.env.REACT_APP_NPS_API_KEY;
 const apiUrl = 'https://parksapi.shicks255.com';

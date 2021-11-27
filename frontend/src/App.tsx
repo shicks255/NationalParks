@@ -3,7 +3,7 @@ import './App.css';
 // import { useAuth0 } from '@auth0/auth0-react';
 import Map from './components/Map';
 import ParkFilter from './components/ParkFilter';
-import EditVisit from './components/EditVisit';
+import EditVisit from './components/Park/EditVisit';
 import { parkTypes } from './Constants';
 
 const App: FC = () => {

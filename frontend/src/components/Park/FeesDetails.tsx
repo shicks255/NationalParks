@@ -18,7 +18,7 @@ const FeesDetails: FC<IProps> = (props: IProps) => {
       <table>
         <tbody>
           {fees.map((fee) => (
-            <tr>
+            <tr key={fee.title}>
               <td>{fee.cost}</td>
               <td>{fee.description}</td>
             </tr>

@@ -4,7 +4,7 @@ import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { UserVisit } from '../Models/UserVisit';
-import Park from './Park';
+import Park from './Park/Park';
 import { getParks, getUserVisits } from '../ParksApi';
 import { ParkLocation } from '../Models/Location';
 

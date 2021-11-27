@@ -2,11 +2,11 @@ import React, { FC, useState } from 'react';
 import { Marker, Polygon } from 'react-leaflet';
 import L, { LatLngTuple } from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
-import { ParkLocation } from '../Models/Location';
-import { UserVisit } from '../Models/UserVisit';
-import { getParkInfo } from '../ParksApi';
+import { ParkLocation } from '../../Models/Location';
+import { UserVisit } from '../../Models/UserVisit';
+import { getParkInfo } from '../../ParksApi';
 import ParkPopup, { IDetails } from './ParkPopup';
-import useAnalytics from '../hooks/useAnalytics';
+import useAnalytics from '../../hooks/useAnalytics';
 
 interface IProps {
   park: ParkLocation;
