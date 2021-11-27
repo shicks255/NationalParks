@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { FC, useEffect, useState } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -80,13 +81,8 @@ const Map: FC<IProps> = (props: IProps) => {
           style={{ height: '80vh' }}
         >
           <TileLayer
-            attribution="Map tiles by <a href=http://stamen.com>Stamen
-            Design</a>, under <a href=http://creativecommons.org/lice
-            nses/by/3.0>CC BY 3.0</a>. Data by <a href=http://openstre
-            etmap.org>OpenStreetMap</a>, under <a href=http://www.open
-            streetmap.org/copyright>ODbL</a>."
-            url="https://stamen-tiles-{s}.a.ssl.fastly.net/terrain
-            /{z}/{x}/{y}.png"
+            attribution="Map tiles by <a href=http://stamen.com>StamenDesign</a>, under <a href=http://creativecommons.org/licenses/by/3.0>CC BY 3.0</a>. Data by <a href=http://openstreetmap.org>OpenStreetMap</a>, under <a href=http://www.openstreetmap.org/copyright>ODbL</a>."
+            url="https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png"
           />
           {/* <TileLayer */}
           {/*  attribution="&copy; <a href=http://osm.org/copyright>

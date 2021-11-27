@@ -3,7 +3,7 @@ import { IUser, User } from './Models/User';
 import { UserVisit } from './Models/UserVisit';
 import { IDetails } from './components/ParkPopup';
 
-const apiKey = process.env.NPS_API_KEY;
+const apiKey = process.env.REACT_APP_NPS_API_KEY;
 const apiUrl = 'https://parksapi.shicks255.com';
 
 function getUser(): User {
