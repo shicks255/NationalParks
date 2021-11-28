@@ -19,7 +19,7 @@ const details: IOperatingHours[] = [
   },
 ];
 
-describe('HoursDetails', () => {
+describe('HoursDetailsTest', () => {
   test('should render HoursDetails', () => {
     render(<HoursDetails details={details} />);
     expect(screen.queryByTestId('hours-label')).toHaveTextContent(

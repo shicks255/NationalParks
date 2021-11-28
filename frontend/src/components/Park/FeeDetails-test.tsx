@@ -17,7 +17,7 @@ const testFees: IEntranceFee[] = [
 
 const emptyFees: IEntranceFee[] = [];
 
-describe('FeeDetails', () => {
+describe('FeeDetailsTest', () => {
   test('renders FeeDetails component', () => {
     render(<FeesDetails fees={testFees} />);
     expect(screen.queryByRole('table')).toBeInTheDocument();
