@@ -32,7 +32,7 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
       <button type="button" className="image-button" onClick={slideRight}>
         &#10095;
       </button>
-      {images.map((img, i, array) => {
+      {images.map((img, i) => {
         const imageClass = i + 1 === shownImage ? 'shown' : 'hide';
         return (
           <div>
