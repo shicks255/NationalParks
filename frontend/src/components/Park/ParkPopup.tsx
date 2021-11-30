@@ -219,6 +219,7 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
             )}
             <br />
             {details && <ImageDetails images={details?.images} />}
+            <br />
             Avg Rating {rating}
             <br />
             {user && (

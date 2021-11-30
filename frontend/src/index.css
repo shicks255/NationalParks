@@ -182,3 +182,29 @@ blockquote {
 .hide {
   display: none;
 }
+
+.image-title {
+  color: white;
+}
+
+.image-info {
+  color: white;
+}
+
+.image-dots {
+  width: 75%;
+  margin: auto;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.image-dot {
+
+}
+
+.image-button {
+  width: 35px;
+}
