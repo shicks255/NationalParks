@@ -72,9 +72,11 @@ const App: FC = () => {
         </nav>
       </header>
 
-      <div className="map-container">
-        <Map filters={filters} />
-        &copy;<a href="https://shicks255.com">Steven M Hicks</a>
+      <div className="map-box">
+        <div className="map-container">
+          <Map filters={filters} />
+          &copy;<a href="https://shicks255.com">Steven M Hicks</a>
+        </div>
       </div>
     </div>
   );

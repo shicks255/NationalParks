@@ -1,7 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Marker, Polygon } from 'react-leaflet';
-import L, { LatLngTuple } from 'leaflet';
-import icon from 'leaflet/dist/images/marker-icon.png';
+import L, { LatLngTuple, PointTuple } from 'leaflet';
 import { ParkLocation } from '../../Models/Location';
 import { UserVisit } from '../../Models/UserVisit';
 import { getParkInfo } from '../../ParksApi';
@@ -13,10 +12,52 @@ interface IProps {
   userVisit?: UserVisit | undefined;
 }
 
+interface MyIcon {
+  url: string;
+  heightWidth: number[];
+}
+
+const getIcon: (park: ParkLocation) => MyIcon = (park) => {
+  let iconUrl = '';
+  const dimension: number[] = [];
+  if (['PARK', 'MON', 'NMEM'].includes(park.type.toString())) {
+    iconUrl = '/nps-logo.png';
+    dimension.push(20, 25);
+  }
+  if (['HPARK', 'HSITE', 'HTRAIL'].includes(park.type.toString())) {
+    iconUrl = '/books.png';
+    dimension.push(20, 25);
+  }
+  if (['BFIELD', 'PFIELD', 'MPARK'].includes(park.type.toString())) {
+    iconUrl = '/cross-swords.png';
+    dimension.push(20, 25);
+  }
+  if (
+    ['RIVER', 'RRIVER', 'SRIVER', 'SEA', 'LAKE'].includes(park.type.toString())
+  ) {
+    iconUrl = '/water.png';
+    dimension.push(25, 25);
+  }
+  if (
+    ['PRE', 'RECR', 'RES', 'PRKWY', 'MPRKWAY', 'TRAIL', 'STRAIL'].includes(
+      park.type.toString()
+    )
+  ) {
+    iconUrl = '/park-6-256.png';
+    dimension.push(25, 30);
+  }
+
+  return {
+    url: iconUrl,
+    heightWidth: dimension,
+  };
+};
+
 const Park: FC<IProps> = ({ park, userVisit }: IProps) => {
+  const iconAndDimension = getIcon(park);
   const ic = L.icon({
-    iconUrl: icon,
-    iconSize: [15, 25],
+    iconUrl: iconAndDimension.url,
+    iconSize: iconAndDimension.heightWidth as PointTuple,
     // iconAnchor: [0, 35],
   });
 

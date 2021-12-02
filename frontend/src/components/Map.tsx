@@ -78,7 +78,7 @@ const Map: FC<IProps> = (props: IProps) => {
         <MapContainer
           center={[41.878, -87.629]}
           zoom={5}
-          style={{ height: '80vh' }}
+          style={{ height: '90vh' }}
         >
           <TileLayer
             attribution="Map tiles by <a href=http://stamen.com>StamenDesign</a>, under <a href=http://creativecommons.org/licenses/by/3.0>CC BY 3.0</a>. Data by <a href=http://openstreetmap.org>OpenStreetMap</a>, under <a href=http://www.openstreetmap.org/copyright>ODbL</a>."

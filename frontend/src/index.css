@@ -6,7 +6,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
+  /*height: 100vh;*/
 }
+
+/*#root {*/
+/*  height: 100%;*/
+/*}*/
+/**/
+/*.App {*/
+/*  height: 100%;*/
+/*}*/
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -49,6 +58,10 @@ a {
 
 /*.hamburger {*/
 /*  display: none;*/
+/*}*/
+
+/*.map-box {*/
+/*  height: 100%;*/
 /*}*/
 
 .bar {
@@ -99,35 +112,6 @@ a {
   transform: translateY(-8px) rotate(-45deg);
 }
 
-@media only screen and (max-width: 768px) {
-  .nav-menu {
-    position: fixed;
-    left: -100%;
-    top: 5rem;
-    flex-direction: column;
-    background-color: #fff;
-    width: 100%;
-    border-radius: 10px;
-    text-align: center;
-    transition: 0.3s;
-    box-shadow:
-            0 10px 27px rgba(0, 0, 0, 0.05);
-  }
-
-  .nav-menu.active {
-    left: 0;
-  }
-
-  .nav-item {
-    margin: 2.5rem 0;
-  }
-
-  .hamburger {
-    display: block;
-    cursor: pointer;
-  }
-}
-
 blockquote {
   margin: 10px 10px 5px 10px;
 }
@@ -139,13 +123,14 @@ blockquote {
 .shelf-container {
   position: absolute;
   top: 0;
-  right: -10px;
+  right: -100px;
   background-color: white;
   z-index: 900;
   height: 100%;
-  width: 0%;
+  width: 0;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
+  overflow-y: scroll;
 }
 
 .shelf-container.active {
@@ -161,7 +146,7 @@ blockquote {
 }
 
 .leaflet-container {
-  margin-left: 1rem;
+  /*margin-left: 1rem;*/
 }
 
 .image-background {
@@ -207,4 +192,46 @@ blockquote {
 
 .image-button {
   width: 35px;
+}
+
+table td {
+  text-align: left;
+}
+
+.left-space > * {
+  margin-left: 15px;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .shelf-container.active {
+    width: 55%;
+  }
+
+  .nav-menu {
+    position: fixed;
+    left: -100%;
+    top: 5rem;
+    flex-direction: column;
+    background-color: #fff;
+    width: 100%;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.3s;
+    box-shadow:
+            0 10px 27px rgba(0, 0, 0, 0.05);
+  }
+
+  .nav-menu.active {
+    left: 0;
+  }
+
+  .nav-item {
+    margin: 2.5rem 0;
+  }
+
+  .hamburger {
+    display: block;
+    cursor: pointer;
+  }
 }
