@@ -186,10 +186,6 @@ blockquote {
   justify-content: space-evenly;
 }
 
-.image-dot {
-
-}
-
 .image-button {
   width: 35px;
 }
@@ -202,6 +198,67 @@ table td {
   margin-left: 15px;
 }
 
+.filter-table {
+  margin-left: 12px;
+}
+
+.filter-image {
+  vertical-align: middle;
+  margin-right: 6px;
+  margin-bottom: 3px;
+}
+
+.option-label {
+  font-weight: bold;
+}
+
+.filter-type {
+ font-weight: bold;
+  padding: 5px;
+}
+
+/*.leaflet-popup {*/
+/*  min-width: 450px;*/
+/*  border-radius: 100px;*/
+/*  color: red;*/
+/*}*/
+
+.popup-stuff {
+  /*overflow-y: scroll;*/
+  /*height: 350px;*/
+  /*width: 450px;*/
+}
+
+.leaflet-popup-content-wrapper {
+  width: 450px;
+  height: 350px;
+}
+
+.leaflet-popup-content {
+  position: relative;
+  width: auto !important;
+  overflow-y: scroll;
+  height: 300px;
+}
+
+.inner-popup-header {
+  position: fixed;
+  background-color: white;
+  display: flex;
+  /*width: 100%;*/
+  /*margin: -1px 19px 0px 0px;*/
+}
+
+.inner-popup-content {
+  /*overflow-y: scroll;*/
+  /*height: auto;*/
+}
+
+.park-title-text {
+  /*display: block;*/
+  /*width: 100%;*/
+  flex-grow: 1;
+}
 
 @media only screen and (max-width: 768px) {
   .shelf-container.active {

@@ -1,70 +1,109 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import { parkTypes, states } from '../Constants';
+import { ParkLocation } from '../Models/Location';
 
 interface IProps {
   filters: { [key: string]: boolean };
   toggleFunc: (e: string) => void;
+  parks: ParkLocation[];
 }
 
-const makeRow: (
-  arg: string[],
-  toggleFunc: (s: string) => void,
-  filters: { [key: string]: boolean }
-) => JSX.Element = (location, toggleFunc, filters) => (
-  <tr key={location[0]}>
-    <td>
-      <label htmlFor={location[0]}>
-        <input
-          key={location[0]}
-          onChange={() => toggleFunc(location[0])}
-          checked={filters[location[0]]}
-          id={location[0]}
-          type="checkbox"
-        />
-        {location[1]}
-      </label>
-    </td>
-  </tr>
-);
-
 const ParkFilter: React.FC<IProps> = (props: IProps) => {
-  const { filters, toggleFunc } = props;
+  const { filters, toggleFunc, parks } = props;
+  const parkTypeCountsMap = parks.reduce<Record<string, number>>(
+    (prev, curr) => {
+      if (prev[curr.type]) {
+        prev[curr.type] += 1;
+      } else {
+        prev[curr.type] = 1;
+      }
+      return prev;
+    },
+    {}
+  );
+
+  const makeRow: (arg: string[]) => JSX.Element = (location) => {
+    const parkType = location[0];
+    const parkTypeName = location[1];
+    return (
+      <tr key={parkType}>
+        <td>
+          <label htmlFor={parkType}>
+            <input
+              key={parkType}
+              onChange={() => toggleFunc(parkType)}
+              checked={filters[parkType]}
+              id={parkType}
+              type="checkbox"
+            />
+            {parkTypeName} <i>({parkTypeCountsMap[parkType]})</i>
+          </label>
+        </td>
+      </tr>
+    );
+  };
+
   return (
     <>
       <div>
-        <b>Show</b>
+        <b>Options</b>
       </div>
       <table className="filter-table">
         <tbody>
           <tr>
-            <td className="left-space">
-              <img height={18} src="/nps-logo.png" alt="" /> Big Ones
+            <td className="option-label">Park Types</td>
+          </tr>
+          <tr>
+            <td className="left-space filter-type">
+              <img
+                className="filter-image"
+                height={18}
+                src="/nps-logo.png"
+                alt=""
+              />
+              The Top Dogs
             </td>
           </tr>
           {Object.entries(parkTypes)
             .filter((item) => ['PARK', 'MON', 'NMEM'].includes(item[0]))
-            .map((item) => makeRow(item, toggleFunc, filters))}
+            .map((item) => makeRow(item))}
           <tr>
-            <td className="left-space">
-              <img height={18} src="/books.png" alt="" />
+            <td className="left-space filter-type">
+              <img
+                className="filter-image"
+                height={18}
+                src="/books.png"
+                alt=""
+              />
               History
             </td>
           </tr>
           {Object.entries(parkTypes)
             .filter((item) => ['HPARK', 'HSITE', 'HTRAIL'].includes(item[0]))
-            .map((item) => makeRow(item, toggleFunc, filters))}
+            .map((item) => makeRow(item))}
           <tr>
-            <td className="left-space">
-              <img height={18} src="/cross-swords.png" alt="" />
+            <td className="left-space filter-type">
+              <img
+                className="filter-image"
+                height={18}
+                src="/cross-swords.png"
+                alt=""
+              />
               Military
             </td>
           </tr>
           {Object.entries(parkTypes)
             .filter((item) => ['BFIELD', 'PFIELD', 'MPARK'].includes(item[0]))
-            .map((item) => makeRow(item, toggleFunc, filters))}
+            .map((item) => makeRow(item))}
           <tr>
-            <td className="left-space">
-              <img height={18} src="/water.png" alt="" />
+            <td className="left-space filter-type">
+              <img
+                className="filter-image"
+                height={18}
+                src="/water.png"
+                alt=""
+              />
               Waterways
             </td>
           </tr>
@@ -72,10 +111,15 @@ const ParkFilter: React.FC<IProps> = (props: IProps) => {
             .filter((item) =>
               ['RIVER', 'RRIVER', 'SRIVER', 'SEA', 'LAKE'].includes(item[0])
             )
-            .map((item) => makeRow(item, toggleFunc, filters))}
+            .map((item) => makeRow(item))}
           <tr>
-            <td className="left-space">
-              <img height={18} src="/park-6-256.png" alt="" />
+            <td className="left-space filter-type">
+              <img
+                className="filter-image"
+                height={18}
+                src="/park-6-256.png"
+                alt=""
+              />
               Land
             </td>
           </tr>
@@ -91,9 +135,9 @@ const ParkFilter: React.FC<IProps> = (props: IProps) => {
                 'STRAIL',
               ].includes(item[0])
             )
-            .map((item) => makeRow(item, toggleFunc, filters))}
+            .map((item) => makeRow(item))}
           <tr>
-            <td className="left-space">
+            <td className="left-space filter-type">
               <b>Show</b>
             </td>
           </tr>

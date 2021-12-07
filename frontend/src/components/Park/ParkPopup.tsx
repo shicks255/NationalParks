@@ -182,23 +182,35 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
         </Popup>
       ) : (
         // eslint-disable-next-line react/jsx-no-bind
-        <Popup>
-          <div style={{ maxHeight: 250, overflowY: 'scroll' }}>
+        <Popup className="popup-stuff">
+          <div className="inner-popup-header">
             {user && (
               <button type="button" onClick={() => setIsEditing(!isEditing)}>
                 Edit
               </button>
             )}
-            <b>
+            <b className="park-title-text">
               {name}
               {details && (
                 <a href={details.url} target="_blank" rel="noreferrer">
-                  &amp;
+                  <img
+                    className="external-link"
+                    width={15}
+                    src="/download.png"
+                    alt="(external)"
+                  />
                 </a>
               )}
             </b>
+          </div>
+          <div className="inner-popup-content">
             <br />
-            <blockquote>{details && details.description}</blockquote>
+            {details && <ImageDetails images={details?.images} />}
+            <br />
+            <br />
+            <CollapsibleBox title="Details">
+              <blockquote>{details && details.description}</blockquote>
+            </CollapsibleBox>
             <br />
             {details && (
               <CollapsibleBox title="Hours">
@@ -217,8 +229,6 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
                 <FeesDetails fees={details.entranceFees} />
               </CollapsibleBox>
             )}
-            <br />
-            {details && <ImageDetails images={details?.images} />}
             <br />
             Avg Rating {rating}
             <br />

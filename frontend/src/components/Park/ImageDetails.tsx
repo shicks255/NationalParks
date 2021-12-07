@@ -35,7 +35,7 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
       {images.map((img, i) => {
         const imageClass = i + 1 === shownImage ? 'shown' : 'hide';
         return (
-          <div>
+          <div key={img.url}>
             <div className="image-background">
               <div className={imageClass}>
                 <span className="image-title">{img.title}</span>
@@ -43,9 +43,13 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
                   <img className="imagee" src={img.url} alt={img.altText} />
                 </a>
                 <div className="image-dots">
-                  {[...Array(images.length)].map((dot, ii) => {
+                  {[...Array(images.length)].map((number, ii) => {
                     if (ii + 1 === shownImage) {
-                      return <div className="image-dot">&#10029;</div>;
+                      return (
+                        <div key={number} className="image-dot">
+                          &#10029;
+                        </div>
+                      );
                     }
                     return <div className="image-dot">&#10032;</div>;
                   })}
