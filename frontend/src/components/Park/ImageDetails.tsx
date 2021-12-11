@@ -24,7 +24,6 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
 
   return (
     <>
-      Images
       <br />
       <button type="button" className="image-button" onClick={slideLeft}>
         &#10094;
@@ -33,14 +32,14 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
         &#10095;
       </button>
       {images.map((img, i) => {
-        const imageClass = i + 1 === shownImage ? 'shown' : 'hide';
+        const imageClass = i + 1 === shownImage ? 'shown-image' : 'hide-image';
         return (
           <div key={img.url}>
             <div className="image-background">
               <div className={imageClass}>
                 <span className="image-title">{img.title}</span>
                 <a href={img.url} target="_blank" rel="noreferrer">
-                  <img className="imagee" src={img.url} alt={img.altText} />
+                  <img className="park-image" src={img.url} alt={img.altText} />
                 </a>
                 <div className="image-dots">
                   {[...Array(images.length)].map((number, ii) => {
@@ -51,7 +50,11 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
                         </div>
                       );
                     }
-                    return <div className="image-dot">&#10032;</div>;
+                    return (
+                      <div key={number} className="image-dot">
+                        &#10032;
+                      </div>
+                    );
                   })}
                 </div>
                 <hr />
@@ -69,12 +72,6 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
           </div>
         );
       })}
-      <button type="button" className="image-button" onClick={slideLeft}>
-        &#10094;
-      </button>
-      <button type="button" className="image-button" onClick={slideRight}>
-        &#10095;
-      </button>
     </>
   );
 };

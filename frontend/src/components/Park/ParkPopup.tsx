@@ -85,12 +85,6 @@ interface ITopic {
 }
 
 const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
-  // const ic = L.icon({
-  //   iconUrl: icon,
-  //   iconSize: [15, 25],
-  //   iconAnchor: [0, 35],
-  // });
-
   const { id, name, latitude, longitude } = park;
   const { rating, comment, visited } = userVisit ?? {
     rating: '',
@@ -208,25 +202,27 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
             {details && <ImageDetails images={details?.images} />}
             <br />
             <br />
-            <CollapsibleBox title="Details">
-              <blockquote>{details && details.description}</blockquote>
-            </CollapsibleBox>
+            <blockquote>{details && details.description}</blockquote>
             <br />
             {details && (
               <CollapsibleBox title="Hours">
-                <HoursDetails details={details.operatingHours} />
+                <blockquote>
+                  <HoursDetails details={details.operatingHours} />
+                </blockquote>
               </CollapsibleBox>
             )}
             <br />
             {details && (
               <CollapsibleBox title="Weather">
-                {details.weatherInfo}
+                <blockquote>{details.weatherInfo}</blockquote>
               </CollapsibleBox>
             )}
             <br />
             {details && (
               <CollapsibleBox title="Cost">
-                <FeesDetails fees={details.entranceFees} />
+                <blockquote>
+                  <FeesDetails fees={details.entranceFees} />
+                </blockquote>
               </CollapsibleBox>
             )}
             <br />

@@ -1,3 +1,4 @@
+/*Resets*/
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -8,14 +9,6 @@ body {
   overflow: hidden;
   /*height: 100vh;*/
 }
-
-/*#root {*/
-/*  height: 100%;*/
-/*}*/
-/**/
-/*.App {*/
-/*  height: 100%;*/
-/*}*/
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -41,11 +34,13 @@ a {
   text-decoration: none;
 }
 
+/*Header and Side Shelf*/
 .header {
   border-bottom: 1px solid #E2E8F0;
-  z-index: 999;
-  height: 35px;
+  overflow: visible;
   position: relative;
+  z-index: 998;
+  background-color: white;
 }
 
 .navbar {
@@ -54,15 +49,15 @@ a {
   align-items: center;
   padding: 1rem 1.5rem;
   height: 35px;
+  z-index: 401;
 }
 
-/*.hamburger {*/
-/*  display: none;*/
-/*}*/
-
-/*.map-box {*/
-/*  height: 100%;*/
-/*}*/
+.hamburger {
+  position: absolute;
+  top: 2px;
+  right: 15px;
+  z-index: 999;
+}
 
 .bar {
   display: block;
@@ -112,20 +107,12 @@ a {
   transform: translateY(-8px) rotate(-45deg);
 }
 
-blockquote {
-  margin: 10px 10px 5px 10px;
-}
-
-.App {
-  overflow: hidden;
-}
-
 .shelf-container {
   position: absolute;
   top: 0;
   right: -100px;
   background-color: white;
-  z-index: 900;
+  z-index: 997;
   height: 100%;
   width: 0;
   -webkit-transition: all 0.3s ease-in-out;
@@ -145,26 +132,47 @@ blockquote {
   padding-top: 2rem;
 }
 
-.leaflet-container {
-  /*margin-left: 1rem;*/
+/*Filters inside Shelf*/
+.filter-table {
+  margin-left: 12px;
+}
+
+.filter-image {
+  vertical-align: middle;
+  margin-right: 6px;
+  margin-bottom: 3px;
+}
+
+.option-label {
+  font-weight: bold;
+}
+
+.filter-type {
+  font-weight: bold;
+  padding: 5px;
+}
+
+/*Popup Content*/
+blockquote {
+  margin: 10px 10px 5px 10px;
 }
 
 .image-background {
   background-color: black;
 }
 
-.shown {
+.shown-image {
   display: block;
   margin: auto;
   width: 200px;
 }
 
-.imagee {
+.park-image {
   height: 150px;
   max-width: 200px;
 }
 
-.hide {
+.hide-image {
   display: none;
 }
 
@@ -198,37 +206,6 @@ table td {
   margin-left: 15px;
 }
 
-.filter-table {
-  margin-left: 12px;
-}
-
-.filter-image {
-  vertical-align: middle;
-  margin-right: 6px;
-  margin-bottom: 3px;
-}
-
-.option-label {
-  font-weight: bold;
-}
-
-.filter-type {
- font-weight: bold;
-  padding: 5px;
-}
-
-/*.leaflet-popup {*/
-/*  min-width: 450px;*/
-/*  border-radius: 100px;*/
-/*  color: red;*/
-/*}*/
-
-.popup-stuff {
-  /*overflow-y: scroll;*/
-  /*height: 350px;*/
-  /*width: 450px;*/
-}
-
 .leaflet-popup-content-wrapper {
   width: 450px;
   height: 350px;
@@ -245,20 +222,24 @@ table td {
   position: fixed;
   background-color: white;
   display: flex;
-  /*width: 100%;*/
-  /*margin: -1px 19px 0px 0px;*/
+  padding: 1vh;
 }
 
 .inner-popup-content {
-  /*overflow-y: scroll;*/
-  /*height: auto;*/
+  margin-top: 2vh;
 }
 
 .park-title-text {
-  /*display: block;*/
-  /*width: 100%;*/
-  flex-grow: 1;
+  flex-grow: 2;
+  width: 100%;
 }
+
+/*Park Outlines*/
+.outline {
+  opacity: 0;
+  visibility: hidden;
+}
+
 
 @media only screen and (max-width: 768px) {
   .shelf-container.active {
@@ -290,5 +271,9 @@ table td {
   .hamburger {
     display: block;
     cursor: pointer;
+    position: absolute;
+    top: 2px;
+    right: 15px;
+    z-index: 999;
   }
 }

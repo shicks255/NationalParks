@@ -11,6 +11,13 @@ function sendParkClick(parkId: string) {
   });
 }
 
+function sendParkClick2(parkId: string) {
+  window.gtag('event', 'select_content', {
+    content_type: 'park',
+    item_id: parkId,
+  });
+}
+
 function sendLogin(userEmail: string) {
   window.gtag('event', 'login', {
     event_label: userEmail,
@@ -26,6 +33,7 @@ function sendParkTypeHide(parkType: string) {
 
 interface Props {
   sendParkClick: (code: string) => void;
+  sendParkClick2: (code: string) => void;
   sendLogin: (email: string) => void;
   sendParkTypeHide: (type: string) => void;
 }
@@ -35,6 +43,7 @@ function useAnalytics(): Props {
     sendParkClick,
     sendLogin,
     sendParkTypeHide,
+    sendParkClick2,
   };
 }
 

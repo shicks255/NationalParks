@@ -1,10 +1,14 @@
 /* eslint-disable max-len */
 import React, { FC, useEffect, useState } from 'react';
-import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
+import {
+  MapContainer,
+  TileLayer,
+  ZoomControl,
+} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { UserVisit } from '../Models/UserVisit';
-import Park from './Park/Park';
+import Parks from './Park/Parks';
 import { getUserVisits } from '../ParksApi';
 import { ParkLocation } from '../Models/Location';
 
@@ -61,11 +65,10 @@ const Map: FC<IProps> = (props: IProps) => {
   return (
     <div>
       <div>National Parks Visiting Tool</div>
-      <div
-        className="leaflet-container"
-        // style={{ width: '70%', display: 'inline-block' }}
-      >
+      <div className="leaflet-container">
         <MapContainer
+          maxZoom={13}
+          minZoom={3}
           center={[41.878, -87.629]}
           zoom={5}
           style={{ height: '90vh' }}
@@ -80,10 +83,7 @@ const Map: FC<IProps> = (props: IProps) => {
             attribution="&copy; <a href=http://osm.org/copyright>OpenStreetMap</a> contributors"
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-
-          {filteredParks.map((loc) => (
-            <Park key={loc.id} park={loc} userVisit={parkVisitMap[loc.id]} />
-          ))}
+          <Parks filteredParks={filteredParks} parkVisitMap={parkVisitMap} />
         </MapContainer>
       </div>
       <div>

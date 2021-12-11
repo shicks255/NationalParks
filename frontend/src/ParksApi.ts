@@ -5,6 +5,7 @@ import { IDetails } from './components/Park/ParkPopup';
 
 const apiKey = process.env.REACT_APP_NPS_API_KEY;
 const apiUrl = 'https://parksapi.shicks255.com';
+// const apiUrl = 'http://localhost:3001';
 
 function getUser(): User {
   return new User({

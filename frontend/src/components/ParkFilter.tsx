@@ -6,11 +6,13 @@ import { ParkLocation } from '../Models/Location';
 interface IProps {
   filters: { [key: string]: boolean };
   toggleFunc: (e: string) => void;
+  toggleAll: () => void;
+  toggleNon: () => void;
   parks: ParkLocation[];
 }
 
 const ParkFilter: React.FC<IProps> = (props: IProps) => {
-  const { filters, toggleFunc, parks } = props;
+  const { filters, toggleFunc, toggleAll, toggleNon, parks } = props;
   const parkTypeCountsMap = parks.reduce<Record<string, number>>(
     (prev, curr) => {
       if (prev[curr.type]) {
@@ -46,13 +48,22 @@ const ParkFilter: React.FC<IProps> = (props: IProps) => {
 
   return (
     <>
-      <div>
-        <b>Options</b>
-      </div>
       <table className="filter-table">
         <tbody>
           <tr>
             <td className="option-label">Park Types</td>
+          </tr>
+          <tr>
+            <td>
+              <button type="button" onClick={toggleAll}>
+                Check All
+              </button>{' '}
+            </td>
+            <td>
+              <button type="button" onClick={toggleNon}>
+                Uncheck All
+              </button>{' '}
+            </td>
           </tr>
           <tr>
             <td className="left-space filter-type">

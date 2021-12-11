@@ -19,8 +19,8 @@ const FeesDetails: FC<IProps> = (props: IProps) => {
         <tbody>
           {fees.map((fee) => (
             <tr key={fee.title}>
-              <td>{fee.cost}</td>
-              <td>{fee.description}</td>
+              <td style={{ textAlign: 'right' }}>$ {fee.cost}</td>
+              <td>{fee.title}</td>
             </tr>
           ))}
         </tbody>

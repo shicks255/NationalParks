@@ -10,6 +10,7 @@ import useAnalytics from '../../hooks/useAnalytics';
 interface IProps {
   park: ParkLocation;
   userVisit?: UserVisit | undefined;
+  showOutline: boolean;
 }
 
 interface MyIcon {
@@ -53,26 +54,25 @@ const getIcon: (park: ParkLocation) => MyIcon = (park) => {
   };
 };
 
-const Park: FC<IProps> = ({ park, userVisit }: IProps) => {
+const Park: FC<IProps> = ({ park, userVisit, showOutline }: IProps) => {
   const iconAndDimension = getIcon(park);
   const ic = L.icon({
     iconUrl: iconAndDimension.url,
     iconSize: iconAndDimension.heightWidth as PointTuple,
     // iconAnchor: [0, 35],
   });
+  const { id, latitude, longitude, outline, code } = park;
+  const coords: LatLngTuple = [latitude, longitude];
 
-  const { sendParkClick } = useAnalytics();
+  const { sendParkClick2 } = useAnalytics();
 
   const [parkDetails, setParkDetails] = useState<IDetails | undefined>(
     undefined
   );
 
-  const { id, latitude, longitude, outline, code } = park;
-  const coords: LatLngTuple = [latitude, longitude];
-
   function getDetails() {
     if (code) {
-      sendParkClick(code);
+      sendParkClick2(code);
       getParkInfo(code).then((data) => {
         setParkDetails(data);
       });
@@ -93,7 +93,11 @@ const Park: FC<IProps> = ({ park, userVisit }: IProps) => {
       >
         <ParkPopup park={park} userVisit={userVisit} details={parkDetails} />
       </Marker>
-      {outline && <Polygon positions={outline} />}
+      {outline && showOutline && (
+        <div className="outline">
+          <Polygon positions={outline} />
+        </div>
+      )}
     </>
   );
 };
