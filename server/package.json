@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "copy": "copyfiles -u 1 ./config/* ./models/* \\\\thinkcentre\\caddy\\natparks"
+    "copy": "copyfiles -a ./* ./config/* ./models/* \\\\thinkcentre\\caddy\\natparks"
   },
   "keywords": [],
   "author": "",
@@ -18,11 +18,11 @@
     "dotenv": "^10.0.0",
     "exceljs": "^4.3.0",
     "express": "^4.17.1",
-    "express-session": "^1.17.2",
-    "passport": "^0.5.0",
-    "passport-auth0": "^1.4.1",
+    "express-prom-bundle": "^6.4.1",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.9.0"
+    "prom-client": "^14.0.1",
+    "sequelize": "^6.9.0",
+    "winston": "^3.3.3"
   }
 }
