@@ -1,10 +1,6 @@
 /* eslint-disable max-len */
 import React, { FC, useEffect, useState } from 'react';
-import {
-  MapContainer,
-  TileLayer,
-  ZoomControl,
-} from 'react-leaflet';
+import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { UserVisit } from '../Models/UserVisit';
