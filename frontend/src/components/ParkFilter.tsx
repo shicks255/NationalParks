@@ -2,6 +2,7 @@
 import React from 'react';
 import { parkTypes, states } from '../Constants';
 import { ParkLocation } from '../Models/Location';
+import useAnalytics from '../hooks/useAnalytics';
 
 interface IProps {
   filters: { [key: string]: boolean };
@@ -25,6 +26,28 @@ const ParkFilter: React.FC<IProps> = (props: IProps) => {
     {}
   );
 
+  const { sendCheckAll, sendUncheckAll, sendParkTypeShow, sendParkTypeHide } =
+    useAnalytics();
+
+  const selectAll: () => void = () => {
+    sendCheckAll();
+    toggleAll();
+  };
+
+  const selectNone: () => void = () => {
+    sendUncheckAll();
+    toggleNon();
+  };
+
+  const toggle: (parkType: string) => void = (parkType) => {
+    if (filters[parkType]) {
+      sendParkTypeHide(parkType);
+    } else {
+      sendParkTypeShow(parkType);
+    }
+    toggleFunc(parkType);
+  };
+
   const makeRow: (arg: string[]) => JSX.Element = (location) => {
     const parkType = location[0];
     const parkTypeName = location[1];
@@ -34,7 +57,7 @@ const ParkFilter: React.FC<IProps> = (props: IProps) => {
           <label htmlFor={parkType}>
             <input
               key={parkType}
-              onChange={() => toggleFunc(parkType)}
+              onChange={() => toggle(parkType)}
               checked={filters[parkType]}
               id={parkType}
               type="checkbox"
@@ -55,12 +78,12 @@ const ParkFilter: React.FC<IProps> = (props: IProps) => {
           </tr>
           <tr>
             <td>
-              <button type="button" onClick={toggleAll}>
+              <button type="button" onClick={selectAll}>
                 Check All
               </button>{' '}
             </td>
             <td>
-              <button type="button" onClick={toggleNon}>
+              <button type="button" onClick={selectNone}>
                 Uncheck All
               </button>{' '}
             </td>

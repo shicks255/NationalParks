@@ -64,7 +64,7 @@ const Park: FC<IProps> = ({ park, userVisit, showOutline }: IProps) => {
   const { id, latitude, longitude, outline, code } = park;
   const coords: LatLngTuple = [latitude, longitude];
 
-  const { sendParkClick2 } = useAnalytics();
+  const { sendParkClick } = useAnalytics();
 
   const [parkDetails, setParkDetails] = useState<IDetails | undefined>(
     undefined
@@ -72,7 +72,7 @@ const Park: FC<IProps> = ({ park, userVisit, showOutline }: IProps) => {
 
   function getDetails() {
     if (code) {
-      sendParkClick2(code);
+      sendParkClick(code);
       getParkInfo(code).then((data) => {
         setParkDetails(data);
       });

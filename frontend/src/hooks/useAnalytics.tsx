@@ -5,15 +5,8 @@ declare global {
 }
 
 function sendParkClick(parkId: string) {
-  window.gtag('event', 'park_click', {
-    event_category: 'engagement',
-    event_label: parkId,
-  });
-}
-
-function sendParkClick2(parkId: string) {
   window.gtag('event', 'select_content', {
-    content_type: 'park',
+    event_category: 'click',
     item_id: parkId,
   });
 }
@@ -25,17 +18,42 @@ function sendLogin(userEmail: string) {
 }
 
 function sendParkTypeHide(parkType: string) {
-  window.gtag('event', 'park_type_hide', {
-    event_category: 'engagement',
-    event_label: parkType,
+  window.gtag('event', 'select_content', {
+    event_category: 'filter',
+    toggle_filter: 'off',
+    item_id: parkType,
+  });
+}
+
+function sendParkTypeShow(parkType: string) {
+  window.gtag('event', 'select_content', {
+    event_category: 'filter',
+    toggle_filter: 'on',
+    item_id: parkType,
+  });
+}
+
+function sendCheckAll() {
+  window.gtag('event', 'select_content', {
+    event_category: 'filter',
+    event_label: 'check_all',
+  });
+}
+
+function sendUncheckAll() {
+  window.gtag('event', 'select_content', {
+    event_category: 'filter',
+    event_label: 'uncheck_all',
   });
 }
 
 interface Props {
   sendParkClick: (code: string) => void;
-  sendParkClick2: (code: string) => void;
   sendLogin: (email: string) => void;
   sendParkTypeHide: (type: string) => void;
+  sendParkTypeShow: (type: string) => void;
+  sendCheckAll: () => void;
+  sendUncheckAll: () => void;
 }
 
 function useAnalytics(): Props {
@@ -43,7 +61,9 @@ function useAnalytics(): Props {
     sendParkClick,
     sendLogin,
     sendParkTypeHide,
-    sendParkClick2,
+    sendParkTypeShow,
+    sendCheckAll,
+    sendUncheckAll,
   };
 }
 
