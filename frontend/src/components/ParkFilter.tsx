@@ -178,15 +178,6 @@ const ParkFilter: React.FC<IProps> = (props: IProps) => {
           <tr>
             <td>In State</td>
           </tr>
-          <tr>
-            <td>
-              <select>
-                {states.map((state) => (
-                  <option key={state}>{state}</option>
-                ))}
-              </select>
-            </td>
-          </tr>
         </tbody>
       </table>
     </>

@@ -201,7 +201,6 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
             <br />
             {details && <ImageDetails images={details?.images} />}
             <br />
-            <br />
             <blockquote>{details && details.description}</blockquote>
             <br />
             {details && (
@@ -226,8 +225,8 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
               </CollapsibleBox>
             )}
             <br />
-            Avg Rating {rating}
-            <br />
+            {/* Avg Rating {rating} */}
+            {/* <br /> */}
             {user && (
               <>
                 <br />

@@ -7,6 +7,7 @@ import { UserVisit } from '../Models/UserVisit';
 import Parks from './Park/Parks';
 import { getUserVisits } from '../ParksApi';
 import { ParkLocation } from '../Models/Location';
+import ParkSearch from './ParkSearch';
 
 interface IProps {
   filters: { [key: string]: boolean };
@@ -17,6 +18,9 @@ const Map: FC<IProps> = (props: IProps) => {
   const { filters, parks } = props;
   // const [user, setUser] = useState<User | undefined>(undefined);
   const [userVisits, setUserVisits] = useState<UserVisit[]>();
+  const [searchPark, setSearchPark] = useState('');
+  const [searchTextFocused, setSearchTextFocused] = useState(false);
+  const [flyToPark, setFlyToPark] = useState<ParkLocation | null>(null);
   const { loginWithRedirect, user } = useAuth0();
   const LoginButton = () => (
     <button type="button" onClick={() => loginWithRedirect()}>
@@ -60,7 +64,45 @@ const Map: FC<IProps> = (props: IProps) => {
 
   return (
     <div>
-      <div>National Parks Visiting Tool</div>
+      <div className="map-header">National Parks Visiting Tool</div>
+      <div>
+        <div className="park-search">
+          Search for Park:
+          <input
+            value={searchPark}
+            onChange={(e) => {
+              setSearchPark(e.currentTarget.value);
+            }}
+            onFocus={() => setSearchTextFocused(true)}
+            onBlur={() => setSearchTextFocused(false)}
+          />
+          <div className="park-search-results">
+            {searchPark && searchPark.length > 2 && searchTextFocused && (
+              <table>
+                {parks
+                  .filter((loc) =>
+                    loc.name.toLowerCase().includes(searchPark.toLowerCase())
+                  )
+                  .map((loc) => (
+                    <tr onClick={() => setFlyToPark(loc)}>{loc.name}</tr>
+                  ))}
+              </table>
+            )}
+          </div>
+          {searchPark && searchPark.length > 0 && (
+            <div className="x">
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchPark('');
+                }}
+              >
+                X
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
       <div className="leaflet-container">
         <MapContainer
           maxZoom={13}
@@ -70,6 +112,7 @@ const Map: FC<IProps> = (props: IProps) => {
           style={{ height: '90vh' }}
           zoomControl={false}
         >
+          <ParkSearch park={flyToPark} setFlyToPark={setFlyToPark} />
           <ZoomControl position="bottomright" />
           {/* <TileLayer */}
           {/*  attribution="Map tiles by <a href=http://stamen.com>StamenDesign</a>, under <a href=http://creativecommons.org/licenses/by/3.0>CC BY 3.0</a>. Data by <a href=http://openstreetmap.org>OpenStreetMap</a>, under <a href=http://www.openstreetmap.org/copyright>ODbL</a>." */}

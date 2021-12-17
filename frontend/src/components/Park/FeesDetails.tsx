@@ -15,16 +15,18 @@ const FeesDetails: FC<IProps> = (props: IProps) => {
 
   return (
     <div>
-      <table>
-        <tbody>
-          {fees.map((fee) => (
-            <tr key={fee.title}>
-              <td style={{ textAlign: 'right' }}>$ {fee.cost}</td>
-              <td>{fee.title}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <blockquote>
+        <table>
+          <tbody>
+            {fees.map((fee) => (
+              <tr key={fee.title}>
+                <td style={{ textAlign: 'right' }}>$ {fee.cost}</td>
+                <td style={{ paddingLeft: 15 }}>{fee.title}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </blockquote>
     </div>
   );
 };

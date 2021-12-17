@@ -164,12 +164,14 @@ blockquote {
 .shown-image {
   display: block;
   margin: auto;
-  width: 200px;
+  /*width: 200px;*/
 }
 
 .park-image {
-  height: 150px;
-  max-width: 200px;
+  /*height: 150px;*/
+  /*max-width: 250px;*/
+  max-width: 100%;
+  max-height: 300px;
 }
 
 .hide-image {
@@ -240,6 +242,42 @@ table td {
   visibility: hidden;
 }
 
+
+.x {
+  display: inline-block;
+}
+
+.map-header {
+  letter-spacing: 1.2px;
+  font-size: 20px;
+}
+
+/*Park Search*/
+.park-search {
+  position: relative;
+  width: 250px;
+  margin: auto;
+  font-size: 15px;
+}
+
+.park-search-results {
+  position: absolute;
+  z-index: 401;
+}
+
+.park-search-results table {
+  background-color: white;
+  text-align: left;
+}
+
+.park-search-results tr {
+  background-color: white;
+  cursor: pointer;
+}
+
+.park-search-results tr:hover {
+  background-color: grey;
+}
 
 @media only screen and (max-width: 768px) {
   .shelf-container.active {

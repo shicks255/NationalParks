@@ -7,7 +7,7 @@ declare global {
 function sendParkClick(parkId: string) {
   window.gtag('event', 'select_content', {
     event_category: 'click',
-    item_id: parkId,
+    park_id: parkId,
   });
 }
 

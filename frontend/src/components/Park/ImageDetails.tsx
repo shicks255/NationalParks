@@ -10,6 +10,14 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
   const [shownImage, setShownImage] = useState(1);
   const [showInfo, setShowInfo] = useState(false);
 
+  function isLastImage(): boolean {
+    return shownImage === images.length;
+  }
+
+  function isFirstImage(): boolean {
+    return shownImage === 1;
+  }
+
   function slideLeft() {
     if (shownImage > 1) {
       setShownImage(shownImage - 1);
@@ -25,10 +33,20 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
   return (
     <>
       <br />
-      <button type="button" className="image-button" onClick={slideLeft}>
+      <button
+        disabled={isFirstImage()}
+        type="button"
+        className="image-button"
+        onClick={slideLeft}
+      >
         &#10094;
       </button>
-      <button type="button" className="image-button" onClick={slideRight}>
+      <button
+        disabled={isLastImage()}
+        type="button"
+        className="image-button"
+        onClick={slideRight}
+      >
         &#10095;
       </button>
       {images.map((img, i) => {
