@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
-import { parkTypes, states } from '../Constants';
+import { parkTypes } from '../Constants';
 import { ParkLocation } from '../Models/Location';
 import useAnalytics from '../hooks/useAnalytics';
 

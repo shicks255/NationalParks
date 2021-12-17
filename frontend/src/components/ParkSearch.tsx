@@ -20,7 +20,7 @@ const ParkSearch: FC<IProps> = (props) => {
     if (park) {
       fly(park);
     }
-  }, [park]);
+  }, [park, map, setFlyToPark]);
 
   return <></>;
 };
