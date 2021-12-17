@@ -74,7 +74,7 @@ const Map: FC<IProps> = (props: IProps) => {
               setSearchPark(e.currentTarget.value);
             }}
             onFocus={() => setSearchTextFocused(true)}
-            onBlur={() => setSearchTextFocused(false)}
+            onBlur={() => setTimeout(() => setSearchTextFocused(false), 250)}
           />
           <div className="park-search-results">
             {searchPark && searchPark.length > 2 && searchTextFocused && (
