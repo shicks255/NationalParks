@@ -122,12 +122,9 @@ const App: FC = () => {
           </div>
         </div>
       </div>
-
-      <div className="map-box">
-        <div className="map-container">
-          <Map filters={filters} parks={parks} />
-          &copy;<a href="https://shicks255.com">Steven M Hicks</a>
-        </div>
+      <Map filters={filters} parks={parks} />
+      <div className="copyright-container">
+        &copy;<a href="https://shicks255.com">Steven M Hicks</a>
       </div>
     </div>
   );

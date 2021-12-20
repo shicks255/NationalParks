@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { useMapEvents } from 'react-leaflet';
+import { useMapEvents, useMap } from 'react-leaflet';
 import Park from './Park';
 import { UserVisit } from '../../Models/UserVisit';
 import { ParkLocation } from '../../Models/Location';
@@ -14,10 +14,17 @@ const Parks: FC<IProps> = (props: IProps) => {
   const [zoomLevel, setZoomLevel] = useState(5);
 
   const mapevents = useMapEvents({
-    zoom: () => {
+    zoomend: () => {
       setZoomLevel(mapevents.getZoom());
     },
   });
+
+  /**
+   * To stop the weird screen jumping issue when using zoom control
+   */
+  const map = useMap();
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  map.getContainer().focus = () => {};
 
   return (
     <div>

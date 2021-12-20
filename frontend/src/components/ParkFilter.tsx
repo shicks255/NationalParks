@@ -170,14 +170,6 @@ const ParkFilter: React.FC<IProps> = (props: IProps) => {
               ].includes(item[0])
             )
             .map((item) => makeRow(item))}
-          <tr>
-            <td className="left-space filter-type">
-              <b>Show</b>
-            </td>
-          </tr>
-          <tr>
-            <td>In State</td>
-          </tr>
         </tbody>
       </table>
     </>

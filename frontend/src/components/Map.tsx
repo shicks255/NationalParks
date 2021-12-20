@@ -109,7 +109,7 @@ const Map: FC<IProps> = (props: IProps) => {
           minZoom={3}
           center={[41.878, -87.629]}
           zoom={5}
-          style={{ height: '90vh' }}
+          style={{ height: '100vh' }}
           zoomControl={false}
         >
           <ParkSearch park={flyToPark} setFlyToPark={setFlyToPark} />
