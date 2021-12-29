@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react';
-import { LatLngTuple } from 'leaflet';
 import { Popup } from 'react-leaflet';
 import { ParkLocation } from '../../Models/Location';
 import { UserVisit } from '../../Models/UserVisit';
@@ -83,7 +82,7 @@ interface ITopic {
 }
 
 const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
-  const { latitude, longitude } = park;
+  // const { latitude, longitude } = park;
   const { comment, visited } = userVisit ?? {
     rating: '',
     comment: '',
