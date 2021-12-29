@@ -19,9 +19,9 @@ interface IProps {
 const ParkDetails: FC<IProps> = (props) => {
   const { user } = useAuth0();
   const { visited, comment, setIsEditing, isEditing, park, details } = props;
-  const { name } = park;
+  const { name, code } = park;
   return (
-    <div className={`park-${name}`}>
+    <div className={`park-${code}`}>
       <div className="inner-popup-header">
         {user && (
           <button type="button" onClick={() => setIsEditing(!isEditing)}>
