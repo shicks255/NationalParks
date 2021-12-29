@@ -2,64 +2,34 @@
 import React, { FC, useEffect, useState } from 'react';
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useAuth0 } from '@auth0/auth0-react';
 import { UserVisit } from '../Models/UserVisit';
 import Parks from './Park/Parks';
-import { getUserVisits } from '../ParksApi';
 import { ParkLocation } from '../Models/Location';
 import ParkSearch from './ParkSearch';
 
 interface IProps {
   filters: { [key: string]: boolean };
   parks: ParkLocation[];
+  userVisits: UserVisit[] | undefined;
 }
 
 const Map: FC<IProps> = (props: IProps) => {
-  const { filters, parks } = props;
-  // const [user, setUser] = useState<User | undefined>(undefined);
-  const [userVisits, setUserVisits] = useState<UserVisit[]>();
+  const { filters, parks, userVisits } = props;
   const [searchPark, setSearchPark] = useState('');
   const [searchTextFocused, setSearchTextFocused] = useState(false);
   const [flyToPark, setFlyToPark] = useState<ParkLocation | null>(null);
-  const { loginWithRedirect, user } = useAuth0();
-  const LoginButton = () => (
-    <button type="button" onClick={() => loginWithRedirect()}>
-      Login
-    </button>
-  );
-
-  const LogoutButton = () => {
-    const { logout } = useAuth0();
-    return (
-      <button
-        type="button"
-        onClick={() => logout({ returnTo: window.location.origin })}
-      >
-        Logout
-      </button>
-    );
-  };
-
-  const userAuthenticated = useAuth0().isAuthenticated;
-
-  useEffect(() => {
-    if (user) {
-      getUserVisits(user?.sub?.slice(6) ?? '').then((res) => {
-        setUserVisits(res);
-      });
-    }
-  }, [user]);
 
   const filteredParks = parks.filter((pa) => filters[pa.type]);
 
   let parkVisitMap: Record<number, UserVisit> = {};
 
   if (userVisits) {
-    parkVisitMap = userVisits.reduce<Record<number, UserVisit>>((pre, curr) => {
+    parkVisitMap = userVisits.reduce<Record<string, UserVisit>>((pre, curr) => {
       // eslint-disable-next-line no-param-reassign
       pre[curr.parkId] = curr;
       return pre;
     }, {});
+    console.log(parkVisitMap);
   }
 
   return (
@@ -107,8 +77,8 @@ const Map: FC<IProps> = (props: IProps) => {
         <MapContainer
           maxZoom={13}
           minZoom={3}
-          center={[41.878, -87.629]}
-          zoom={5}
+          center={[37.878, -98.629]}
+          zoom={4}
           style={{ height: '100vh' }}
           zoomControl={false}
         >
@@ -124,15 +94,6 @@ const Map: FC<IProps> = (props: IProps) => {
           />
           <Parks filteredParks={filteredParks} parkVisitMap={parkVisitMap} />
         </MapContainer>
-      </div>
-      <div>
-        {false && !userAuthenticated && (
-          <>
-            <p>Log in or create an account to start tracking your visits!</p>
-            <LoginButton />
-          </>
-        )}
-        {false && userAuthenticated && <LogoutButton />}
       </div>
     </div>
   );

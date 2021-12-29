@@ -5,7 +5,7 @@ import { UserVisit } from '../../Models/UserVisit';
 import { ParkLocation } from '../../Models/Location';
 
 interface IProps {
-  parkVisitMap: Record<number, UserVisit>;
+  parkVisitMap: Record<string, UserVisit>;
   filteredParks: ParkLocation[];
 }
 
@@ -31,9 +31,9 @@ const Parks: FC<IProps> = (props: IProps) => {
       {filteredParks.map((loc) => (
         <Park
           showOutline={zoomLevel > 7}
-          key={loc.id}
+          key={loc.code}
           park={loc}
-          userVisit={parkVisitMap[loc.id]}
+          userVisit={parkVisitMap[loc.code]}
         />
       ))}
     </div>

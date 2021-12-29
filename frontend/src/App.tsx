@@ -7,20 +7,48 @@ import React, {
   useRef,
 } from 'react';
 import './App.css';
-// import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
 import Map from './components/Map';
 import ParkFilter from './components/ParkFilter';
-import EditVisit from './components/Park/EditVisit';
 import { parkTypes } from './Constants';
-import { getParks } from './ParksApi';
+import { getParks, getUserVisits } from './ParksApi';
 import { ParkLocation } from './Models/Location';
 import useClickOutside from './hooks/useClickOutside';
+import { UserVisit } from './Models/UserVisit';
 
 const App: FC = () => {
   const [expandedMenu, setExpandedMenu] = useState(false);
   const [parks, setParks] = useState<ParkLocation[]>();
+  const [userVisits, setUserVisits] = useState<UserVisit[]>();
 
-  // const { handleRedirectCallback } = useAuth0();
+  const { loginWithRedirect, user } = useAuth0();
+  const LoginButton = () => (
+    <button type="button" onClick={() => loginWithRedirect()}>
+      Login
+    </button>
+  );
+
+  const LogoutButton = () => {
+    const { logout } = useAuth0();
+    return (
+      <button
+        type="button"
+        onClick={() => logout({ returnTo: window.location.origin })}
+      >
+        Logout
+      </button>
+    );
+  };
+
+  const userAuthenticated = useAuth0().isAuthenticated;
+
+  useEffect(() => {
+    if (user) {
+      getUserVisits(user?.sub?.slice(6) ?? '').then((res) => {
+        setUserVisits(res);
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     getParks().then((res) => {
@@ -111,7 +139,17 @@ const App: FC = () => {
         </div>
         <div className={shelfClass}>
           <div className="shelf-content">
-            <EditVisit />
+            <div>
+              {!userAuthenticated && (
+                <>
+                  <p>
+                    Log in or create an account to start tracking your visits!
+                  </p>
+                  <LoginButton />
+                </>
+              )}
+              {userAuthenticated && <LogoutButton />}
+            </div>
             <ParkFilter
               filters={filters}
               toggleFunc={toggleFilter}
@@ -122,7 +160,7 @@ const App: FC = () => {
           </div>
         </div>
       </div>
-      <Map filters={filters} parks={parks} />
+      <Map filters={filters} parks={parks} userVisits={userVisits} />
       <div className="copyright-container">
         &copy;<a href="https://shicks255.com">Steven M Hicks</a>
       </div>

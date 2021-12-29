@@ -1,14 +1,12 @@
 import React, { FC, useState } from 'react';
-import { Popup } from 'react-leaflet';
 import { LatLngTuple } from 'leaflet';
-import { useAuth0 } from '@auth0/auth0-react';
+import { Popup } from 'react-leaflet';
 import { ParkLocation } from '../../Models/Location';
 import { UserVisit } from '../../Models/UserVisit';
-import { saveUserVisit } from '../../ParksApi';
-import CollapsibleBox from '../CollapsibleBox';
 import HoursDetails, { IOperatingHours } from './HoursDetails';
 import FeesDetails, { IEntranceFee } from './FeesDetails';
-import ImageDetails from './ImageDetails';
+import EditParkVisit from './EditParkVisit';
+import ParkDetails from './ParkDetails';
 
 interface IProps {
   park: ParkLocation;
@@ -85,18 +83,14 @@ interface ITopic {
 }
 
 const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
-  const { id, name, latitude, longitude } = park;
-  const { rating, comment, visited } = userVisit ?? {
+  const { latitude, longitude } = park;
+  const { comment, visited } = userVisit ?? {
     rating: '',
     comment: '',
     visited: '',
   };
 
-  const { user } = useAuth0();
   const [isEditing, setIsEditing] = useState(false);
-  const [newRating, setNewRating] = useState(rating);
-  const [newComment, setNewComment] = useState(comment);
-  const [newVisitDate, setNewVisitDate] = useState(visited);
 
   // const getDetails = useCallback(() => {
   //   console.log('getting details');
@@ -110,135 +104,28 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
   //   }
   // }, []);
 
-  function saveVisit() {
-    const newUserVisit: UserVisit = {
-      userId: user?.sub?.slice(6) ?? '',
-      parkId: id,
-      rating: newRating,
-      visited: newVisitDate,
-      comment: newComment,
-    };
-
-    saveUserVisit(newUserVisit);
-  }
-
   const coords: LatLngTuple = [latitude, longitude];
 
   return (
     <>
-      {isEditing ? (
-        <Popup>
-          <div>
-            {coords}
-            <b>{name}</b>
-            <form>
-              <fieldset>
-                <label htmlFor="rating">
-                  <p>Rating</p>
-                  <input
-                    name="rating"
-                    id="rating"
-                    value={newRating}
-                    onChange={(e) => {
-                      setNewRating(e.target.value);
-                    }}
-                  />
-                </label>
-                <label htmlFor="comment">
-                  <p>Comment</p>
-                  <input
-                    name="comment"
-                    id="comment"
-                    value={newComment}
-                    onChange={(e) => {
-                      setNewComment(e.target.value);
-                    }}
-                  />
-                </label>
-                <label htmlFor="visit">
-                  <p>Your Visit</p>
-                  <input
-                    name="visit"
-                    id="visit"
-                    value={newVisitDate}
-                    onChange={(e) => setNewVisitDate(e.target.value)}
-                  />
-                </label>
-              </fieldset>
-              <button type="button" onClick={saveVisit}>
-                Update
-              </button>
-              <button type="button" onClick={() => setIsEditing(false)}>
-                Cancel
-              </button>
-            </form>
-          </div>
-        </Popup>
-      ) : (
-        // eslint-disable-next-line react/jsx-no-bind
-        <Popup className="popup-stuff">
-          <div className="inner-popup-header">
-            {user && (
-              <button type="button" onClick={() => setIsEditing(!isEditing)}>
-                Edit
-              </button>
-            )}
-            <b className="park-title-text">
-              {name}
-              {details && (
-                <a href={details.url} target="_blank" rel="noreferrer">
-                  <img
-                    className="external-link"
-                    width={15}
-                    src="/download.png"
-                    alt="(external)"
-                  />
-                </a>
-              )}
-            </b>
-          </div>
-          <div className="inner-popup-content">
-            <br />
-            {details && <ImageDetails images={details?.images} />}
-            <br />
-            <blockquote>{details && details.description}</blockquote>
-            <br />
-            {details && (
-              <CollapsibleBox title="Hours">
-                <blockquote>
-                  <HoursDetails details={details.operatingHours} />
-                </blockquote>
-              </CollapsibleBox>
-            )}
-            <br />
-            {details && (
-              <CollapsibleBox title="Weather">
-                <blockquote>{details.weatherInfo}</blockquote>
-              </CollapsibleBox>
-            )}
-            <br />
-            {details && (
-              <CollapsibleBox title="Cost">
-                <blockquote>
-                  <FeesDetails fees={details.entranceFees} />
-                </blockquote>
-              </CollapsibleBox>
-            )}
-            <br />
-            {/* Avg Rating {rating} */}
-            {/* <br /> */}
-            {user && (
-              <>
-                <br />
-                You visited: {visited}
-                <br />
-                Your Comment:
-                <i>{comment}</i>
-              </>
-            )}
-          </div>
-        </Popup>
-      )}
+      <Popup>
+        {isEditing ? (
+          <EditParkVisit
+            park={park}
+            setIsEditing={setIsEditing}
+            userVisit={userVisit}
+          />
+        ) : (
+          <ParkDetails
+            visited={visited}
+            comment={comment}
+            setIsEditing={setIsEditing}
+            isEditing={isEditing}
+            park={park}
+            details={details}
+          />
+        )}
+      </Popup>
     </>
   );
 };
@@ -246,7 +133,7 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
 Park.defaultProps = {
   userVisit: {
     userId: '',
-    parkId: 0,
+    parkId: '',
     rating: '',
     comment: '',
     visited: '',

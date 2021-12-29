@@ -105,7 +105,7 @@ const Park: FC<IProps> = ({ park, userVisit, showOutline }: IProps) => {
 Park.defaultProps = {
   userVisit: {
     userId: '',
-    parkId: 0,
+    parkId: '',
     rating: '',
     comment: '',
     visited: '',
