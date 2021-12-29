@@ -1,11 +1,9 @@
 import React, { Dispatch, FC } from 'react';
-import { Popup } from 'react-leaflet';
 import { useAuth0 } from '@auth0/auth0-react';
 import ImageDetails from './ImageDetails';
 import CollapsibleBox from '../CollapsibleBox';
 import HoursDetails from './HoursDetails';
 import FeesDetails from './FeesDetails';
-import { IUser } from '../../Models/User';
 import { ParkLocation } from '../../Models/Location';
 import { IDetails } from './ParkPopup';
 

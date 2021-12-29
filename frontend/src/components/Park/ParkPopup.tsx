@@ -3,8 +3,8 @@ import { LatLngTuple } from 'leaflet';
 import { Popup } from 'react-leaflet';
 import { ParkLocation } from '../../Models/Location';
 import { UserVisit } from '../../Models/UserVisit';
-import HoursDetails, { IOperatingHours } from './HoursDetails';
-import FeesDetails, { IEntranceFee } from './FeesDetails';
+import { IOperatingHours } from './HoursDetails';
+import { IEntranceFee } from './FeesDetails';
 import EditParkVisit from './EditParkVisit';
 import ParkDetails from './ParkDetails';
 
@@ -104,7 +104,7 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
   //   }
   // }, []);
 
-  const coords: LatLngTuple = [latitude, longitude];
+  // const coords: LatLngTuple = [latitude, longitude];
 
   return (
     <>

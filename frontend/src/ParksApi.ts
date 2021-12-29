@@ -5,7 +5,6 @@ import { IDetails } from './components/Park/ParkPopup';
 
 const apiKey = process.env.REACT_APP_NPS_API_KEY;
 const env = process.env.NODE_ENV;
-console.log(env);
 
 const apiUrl =
   env === 'production'
