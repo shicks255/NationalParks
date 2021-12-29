@@ -21,7 +21,7 @@ const ParkDetails: FC<IProps> = (props) => {
   const { visited, comment, setIsEditing, isEditing, park, details } = props;
   const { name, code } = park;
   return (
-    <div className={`clicked-park-${code}`}>
+    <div className={`clicked-park-${code}`} id={code}>
       <div className="inner-popup-header">
         {user && (
           <button type="button" onClick={() => setIsEditing(!isEditing)}>
