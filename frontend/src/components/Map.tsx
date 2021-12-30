@@ -40,7 +40,7 @@ const Map: FC<IProps> = (props: IProps) => {
   }
 
   const parkSearchRef = useRef<HTMLDivElement>(null);
-  useClickOutside(parkSearchRef, (e) => setSearchTextFocused(false));
+  useClickOutside(parkSearchRef, () => setSearchTextFocused(false));
 
   return (
     <div>
