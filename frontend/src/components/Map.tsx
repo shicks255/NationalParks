@@ -1,11 +1,12 @@
 /* eslint-disable max-len */
-import React, { FC, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { UserVisit } from '../Models/UserVisit';
 import Parks from './Park/Parks';
 import { ParkLocation } from '../Models/Location';
 import ParkSearch from './ParkSearch';
+import useClickOutside from '../hooks/useClickOutside';
 
 interface IProps {
   filters: { [key: string]: boolean };
@@ -21,6 +22,13 @@ const Map: FC<IProps> = (props: IProps) => {
 
   const filteredParks = parks.filter((pa) => filters[pa.type]);
 
+  const searchFilterParks = parks
+    .filter((pa) => pa.name.toLowerCase().includes(searchPark.toLowerCase()))
+    .sort((a, b) => {
+      if (a.name > b.name) return 1;
+      return -1;
+    });
+
   let parkVisitMap: Record<number, UserVisit> = {};
 
   if (userVisits) {
@@ -31,10 +39,13 @@ const Map: FC<IProps> = (props: IProps) => {
     }, {});
   }
 
+  const parkSearchRef = useRef<HTMLDivElement>(null);
+  useClickOutside(parkSearchRef, (e) => setSearchTextFocused(false));
+
   return (
     <div>
       <div className="map-header">National Parks Visiting Tool</div>
-      <div>
+      <div ref={parkSearchRef}>
         <div className="park-search">
           Search for Park:
           <input
@@ -43,18 +54,24 @@ const Map: FC<IProps> = (props: IProps) => {
               setSearchPark(e.currentTarget.value);
             }}
             onFocus={() => setSearchTextFocused(true)}
-            onBlur={() => setTimeout(() => setSearchTextFocused(false), 250)}
+            // onBlur={() => setTimeout(() => setSearchTextFocused(false), 250)}
           />
           <div className="park-search-results">
             {searchPark && searchPark.length > 2 && searchTextFocused && (
               <table>
-                {parks
-                  .filter((loc) =>
-                    loc.name.toLowerCase().includes(searchPark.toLowerCase())
-                  )
-                  .map((loc) => (
-                    <tr onClick={() => setFlyToPark(loc)}>{loc.name}</tr>
-                  ))}
+                {searchFilterParks.slice(0, 5).map((loc) => (
+                  <tr
+                    onClick={() => {
+                      setFlyToPark(loc);
+                      setSearchPark(loc.name);
+                    }}
+                  >
+                    {loc.name}
+                  </tr>
+                ))}
+                {searchFilterParks.length > 5 && (
+                  <tr className="non-hover">...</tr>
+                )}
               </table>
             )}
           </div>

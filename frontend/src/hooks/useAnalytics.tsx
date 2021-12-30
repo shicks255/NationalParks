@@ -5,46 +5,35 @@ declare global {
 }
 
 function sendParkClick(parkId: string) {
-  window.gtag('event', 'select_content', {
-    event_category: 'click',
+  window.gtag('event', 'click_park', {
     park_id: parkId,
   });
 }
 
 function sendLogin(userEmail: string) {
   window.gtag('event', 'login', {
-    event_label: userEmail,
+    user_email: userEmail,
   });
 }
 
 function sendParkTypeHide(parkType: string) {
-  window.gtag('event', 'select_content', {
-    event_category: 'filter',
-    toggle_filter: 'off',
-    item_id: parkType,
+  window.gtag('event', 'hide_park_type', {
+    park_type: parkType,
   });
 }
 
 function sendParkTypeShow(parkType: string) {
-  window.gtag('event', 'select_content', {
-    event_category: 'filter',
-    toggle_filter: 'on',
-    item_id: parkType,
+  window.gtag('event', 'show_park_type', {
+    park_type: parkType,
   });
 }
 
 function sendCheckAll() {
-  window.gtag('event', 'select_content', {
-    event_category: 'filter',
-    event_label: 'check_all',
-  });
+  window.gtag('event', 'check_all_filters');
 }
 
 function sendUncheckAll() {
-  window.gtag('event', 'select_content', {
-    event_category: 'filter',
-    event_label: 'uncheck_all',
-  });
+  window.gtag('event', 'uncheck_all_filters');
 }
 
 interface Props {
