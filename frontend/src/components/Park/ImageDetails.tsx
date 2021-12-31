@@ -7,11 +7,19 @@ interface IProps {
 
 const ImageDetails: FC<IProps> = (props: IProps) => {
   const { images } = props;
+  const imgUrls = new Set();
+  const dedupedImages = images.filter((img) => {
+    if (imgUrls.has(img.url)) {
+      return false;
+    }
+    imgUrls.add(img.url);
+    return true;
+  });
   const [shownImage, setShownImage] = useState(1);
   const [showInfo, setShowInfo] = useState(false);
 
   function isLastImage(): boolean {
-    return shownImage === images.length;
+    return shownImage === dedupedImages.length;
   }
 
   function isFirstImage(): boolean {
@@ -25,7 +33,7 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
   }
 
   function slideRight() {
-    if (shownImage < props.images.length) {
+    if (shownImage < dedupedImages.length) {
       setShownImage(shownImage + 1);
     }
   }
@@ -49,7 +57,7 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
       >
         &#10095;
       </button>
-      {images.map((img, i) => {
+      {dedupedImages.map((img, i) => {
         const imageClass = i + 1 === shownImage ? 'shown-image' : 'hide-image';
         return (
           <div key={img.url}>
@@ -60,16 +68,16 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
                   <img className="park-image" src={img.url} alt={img.altText} />
                 </a>
                 <div className="image-dots">
-                  {[...Array(images.length)].map((number, ii) => {
+                  {dedupedImages.map((pic, ii) => {
                     if (ii + 1 === shownImage) {
                       return (
-                        <div key={number} className="image-dot">
+                        <div key={`dot_${pic.url}`} className="image-dot">
                           &#10029;
                         </div>
                       );
                     }
                     return (
-                      <div key={number} className="image-dot">
+                      <div key={`dot_${pic.url}`} className="image-dot">
                         &#10032;
                       </div>
                     );

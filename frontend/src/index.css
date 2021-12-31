@@ -224,11 +224,11 @@ table td {
   position: fixed;
   background-color: white;
   display: flex;
-  padding: 1vh;
+  top: 12px;
 }
 
 .inner-popup-content {
-  margin-top: 2vh;
+  margin-top: -2vh;
 }
 
 .park-title-text {

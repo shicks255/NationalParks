@@ -36,6 +36,12 @@ function sendUncheckAll() {
   window.gtag('event', 'uncheck_all_filters');
 }
 
+function sendSearch(parkName: string) {
+  window.gtag('event', 'search_park', {
+    park_name: parkName,
+  });
+}
+
 interface Props {
   sendParkClick: (code: string) => void;
   sendLogin: (email: string) => void;
@@ -43,6 +49,7 @@ interface Props {
   sendParkTypeShow: (type: string) => void;
   sendCheckAll: () => void;
   sendUncheckAll: () => void;
+  sendSearch: (parkName: string) => void;
 }
 
 function useAnalytics(): Props {
@@ -53,6 +60,7 @@ function useAnalytics(): Props {
     sendParkTypeShow,
     sendCheckAll,
     sendUncheckAll,
+    sendSearch,
   };
 }
 

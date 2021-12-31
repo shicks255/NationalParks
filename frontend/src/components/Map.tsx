@@ -7,6 +7,7 @@ import Parks from './Park/Parks';
 import { ParkLocation } from '../Models/Location';
 import ParkSearch from './ParkSearch';
 import useClickOutside from '../hooks/useClickOutside';
+import useAnalytics from '../hooks/useAnalytics';
 
 interface IProps {
   filters: { [key: string]: boolean };
@@ -19,6 +20,7 @@ const Map: FC<IProps> = (props: IProps) => {
   const [searchPark, setSearchPark] = useState('');
   const [searchTextFocused, setSearchTextFocused] = useState(false);
   const [flyToPark, setFlyToPark] = useState<ParkLocation | null>(null);
+  const { sendSearch } = useAnalytics();
 
   const filteredParks = parks.filter((pa) => filters[pa.type]);
 
@@ -59,19 +61,28 @@ const Map: FC<IProps> = (props: IProps) => {
           <div className="park-search-results">
             {searchPark && searchPark.length > 2 && searchTextFocused && (
               <table>
-                {searchFilterParks.slice(0, 5).map((loc) => (
-                  <tr
-                    onClick={() => {
-                      setFlyToPark(loc);
-                      setSearchPark(loc.name);
-                    }}
-                  >
-                    {loc.name}
-                  </tr>
-                ))}
-                {searchFilterParks.length > 5 && (
-                  <tr className="non-hover">...</tr>
-                )}
+                <tbody>
+                  {searchFilterParks.slice(0, 5).map((loc) => (
+                    <tr
+                      key={loc.code}
+                      onClick={() => {
+                        setFlyToPark(loc);
+                        setSearchPark(loc.name);
+                        sendSearch(loc.name);
+                        setSearchTextFocused(false);
+                      }}
+                    >
+                      <td>
+                        <span>{loc.name}</span>
+                      </td>
+                    </tr>
+                  ))}
+                  {searchFilterParks.length > 5 && (
+                    <tr className="non-hover">
+                      <td>...</td>
+                    </tr>
+                  )}
+                </tbody>
               </table>
             )}
           </div>
