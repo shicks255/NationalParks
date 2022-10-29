@@ -11,8 +11,8 @@ interface IProps {
 }
 
 const ParkDetailsShelf: React.FC<IProps> = ({ selectedPark }: IProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { user } = useAuth0();
-  console.log(user);
 
   const parkDetails = useParkInfo(selectedPark.code, true);
 

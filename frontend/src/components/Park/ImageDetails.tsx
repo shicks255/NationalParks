@@ -84,15 +84,10 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
                   })}
                 </div>
                 <hr />
-                {/* <button type="button" onClick={() => setShowInfo(!showInfo)}>
-                  +
-                </button> */}
-                {/* {showInfo && ( */}
                 <div className="image-info">
                   <div>{img.caption}</div>
                   <div>{img.credit}</div>
                 </div>
-                {/* )} */}
               </div>
             </div>
           </div>
