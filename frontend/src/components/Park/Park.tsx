@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC } from 'react';
 import { Marker } from 'react-leaflet';
 import L, { LatLngTuple, PointTuple } from 'leaflet';
 import { observer } from 'mobx-react-lite';
