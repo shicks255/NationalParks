@@ -5,6 +5,7 @@ import { GrClose } from 'react-icons/gr';
 import { IconContext } from 'react-icons/lib/esm/iconContext';
 import { ParkLocation } from '../Models/Location';
 import uiStore from '../stores/UIStore';
+import { getIcon } from './Park/Park';
 
 interface IProps {
   parks: ParkLocation[];
@@ -48,11 +49,20 @@ const ParkSearcher: React.FC<IProps> = observer(({ parks }: IProps) => {
                     <tr
                       key={loc.code}
                       onClick={() => {
-                        uiStore.updateFlyToPark(loc);
                         uiStore.updateSelectedPark(loc);
                         uiStore.searchTextFocused = false;
                       }}
                     >
+                      <td>
+                        <span>
+                          <img
+                            height={25}
+                            width={25}
+                            src={getIcon(loc, false).url}
+                            alt="test'"
+                          />
+                        </span>
+                      </td>
                       <td>
                         <span>{loc.name}</span>
                       </td>

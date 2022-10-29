@@ -9,8 +9,6 @@ class UIStore {
 
   searchTextFocused: boolean;
 
-  flyToPark: ParkLocation | undefined;
-
   expandedRightShelf: boolean;
 
   filters: { [key: string]: boolean };
@@ -19,7 +17,6 @@ class UIStore {
     this.selectedPark = undefined;
     this.parkSearch = '';
     this.searchTextFocused = false;
-    this.flyToPark = undefined;
     this.expandedRightShelf = false;
     this.filters = {};
 
@@ -47,10 +44,6 @@ class UIStore {
 
   updateSelectedPark(park: ParkLocation | undefined) {
     this.selectedPark = park;
-  }
-
-  updateFlyToPark(park: ParkLocation | undefined) {
-    this.flyToPark = park;
   }
 
   get inputDisplay() {

@@ -25,6 +25,7 @@ yarn-error.log*
 /server/.env
 /server/config/db.config.js
 /frontend/.env
+/frontend/coverage
 
 ./.idea/*
 **/.idea/

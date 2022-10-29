@@ -48,7 +48,7 @@ const Map: FC<IProps> = observer((props: IProps) => {
         <ParkSearcher parks={parks} />
       </div>
       {selectedPark && <ParkDetailsShelf selectedPark={selectedPark} />}
-      <div className="leaflet-container">
+      <div className={`leaflet-container ${selectedPark ? 'active' : ''}`}>
         <MapContainer
           maxZoom={13}
           minZoom={3}

@@ -18,7 +18,10 @@ interface MyIcon {
   heightWidth: number[];
 }
 
-const getIcon: (park: ParkLocation) => MyIcon = (park) => {
+export const getIcon: (park: ParkLocation, selected: boolean) => MyIcon = (
+  park,
+  selected
+) => {
   let iconUrl = '';
   const dimension: number[] = [];
   if (['PARK', 'MON', 'NMEM'].includes(park.type.toString())) {
@@ -48,6 +51,11 @@ const getIcon: (park: ParkLocation) => MyIcon = (park) => {
     dimension.push(25, 30);
   }
 
+  if (selected) {
+    dimension[0] += 15;
+    dimension[1] += 15;
+  }
+
   return {
     url: iconUrl,
     heightWidth: dimension,
@@ -55,7 +63,8 @@ const getIcon: (park: ParkLocation) => MyIcon = (park) => {
 };
 
 const Park: FC<IProps> = observer(({ park }: IProps) => {
-  const iconAndDimension = getIcon(park);
+  const { selectedPark } = uiStore;
+  const iconAndDimension = getIcon(park, selectedPark?.code === park.code);
   const ic = L.icon({
     iconUrl: iconAndDimension.url,
     iconSize: iconAndDimension.heightWidth as PointTuple,
@@ -77,7 +86,6 @@ const Park: FC<IProps> = observer(({ park }: IProps) => {
   const coords: LatLngTuple = [latitude, longitude];
 
   const { sendParkClick } = useAnalytics();
-  const { selectedPark } = uiStore;
 
   function getDetails() {
     if (code) {
@@ -85,18 +93,9 @@ const Park: FC<IProps> = observer(({ park }: IProps) => {
     }
   }
 
-  const markerRef = useRef(null);
-  useEffect(() => {
-    if (markerRef && selectedPark && selectedPark.code === park.code) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      markerRef.current.openPopup();
-    }
-  }, [park.code, selectedPark]);
   return (
     <>
       <Marker
-        ref={markerRef}
         key={id}
         position={coords}
         icon={ic}
