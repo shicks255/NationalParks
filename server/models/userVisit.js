@@ -11,7 +11,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     parkId: {
       //foreign key of Park
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
     },
     visited: {
       type: Sequelize.STRING,

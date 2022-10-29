@@ -105,6 +105,19 @@ const Park: FC<IProps> = ({ park, userVisit, details }: IProps) => {
 
   // const coords: LatLngTuple = [latitude, longitude];
 
+  // const [refReady, setRefReady] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  // const popupRef = useRef<Popup>();
+
+  // useEffect(() => {
+  //   if (refReady && selectedPark && selectedPark === park.code) {
+  //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //     // @ts-ignore
+  //     popupRef.openOn();
+  //   }
+  // }, [selectedPark, refReady]);
+
   return (
     <>
       <Popup>

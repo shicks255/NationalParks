@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useMapEvents, useMap } from 'react-leaflet';
+import { observer } from 'mobx-react-lite';
 import Park from './Park';
 import { UserVisit } from '../../Models/UserVisit';
 import { ParkLocation } from '../../Models/Location';
@@ -9,7 +10,7 @@ interface IProps {
   filteredParks: ParkLocation[];
 }
 
-const Parks: FC<IProps> = (props: IProps) => {
+const Parks: FC<IProps> = observer((props: IProps) => {
   const { parkVisitMap, filteredParks } = props;
   const [zoomLevel, setZoomLevel] = useState(5);
 
@@ -38,6 +39,6 @@ const Parks: FC<IProps> = (props: IProps) => {
       ))}
     </div>
   );
-};
+});
 
 export default Parks;

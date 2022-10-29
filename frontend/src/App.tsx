@@ -1,171 +1,73 @@
-import React, {
-  useCallback,
-  useReducer,
-  useState,
-  FC,
-  useEffect,
-  useRef,
-} from 'react';
-import './App.css';
+import React, { FC, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { observer } from 'mobx-react-lite';
 import Map from './components/Map';
 import ParkFilter from './components/ParkFilter';
-import { parkTypes } from './Constants';
-import { getParks, getUserVisits } from './ParksApi';
-import { ParkLocation } from './Models/Location';
+import { useParks, useUserVisits } from './ParksApi';
 import useClickOutside from './hooks/useClickOutside';
-import { UserVisit } from './Models/UserVisit';
+import uiStore from './stores/UIStore';
+import Login from './components/login/login';
 
-const App: FC = () => {
-  const [expandedMenu, setExpandedMenu] = useState(false);
-  const [parks, setParks] = useState<ParkLocation[]>();
-  const [userVisits, setUserVisits] = useState<UserVisit[]>();
+const App: FC = observer(() => {
+  const parks = useParks();
 
-  const { loginWithRedirect, user } = useAuth0();
-  const LoginButton = () => (
-    <button type="button" onClick={() => loginWithRedirect()}>
-      Login
-    </button>
-  );
+  const { expandedRightShelf } = uiStore;
+  const { isAuthenticated, user } = useAuth0();
+  const userVisits = useUserVisits(user?.sub?.slice(6) || '', isAuthenticated);
 
-  const LogoutButton = () => {
-    const { logout } = useAuth0();
-    return (
-      <button
-        type="button"
-        onClick={() => logout({ returnTo: window.location.origin })}
-      >
-        Logout
-      </button>
-    );
-  };
-
-  const userAuthenticated = useAuth0().isAuthenticated;
-
-  useEffect(() => {
-    if (user) {
-      getUserVisits(user?.sub?.slice(6) ?? '').then((res) => {
-        setUserVisits(res);
-      });
-    }
-  }, [user]);
-
-  useEffect(() => {
-    getParks().then((res) => {
-      setParks(res);
-    });
-  }, []);
-
-  let hamburgerClass = 'hamburger';
-  let shelfClass = 'shelf-container';
-  if (expandedMenu) {
-    hamburgerClass += ' active';
-    shelfClass += ' active';
-  }
-
-  function toggleBurger(): void {
-    setExpandedMenu(!expandedMenu);
-  }
-
-  const defaultFilters: { [key: string]: boolean } = {};
-
-  Object.entries(parkTypes).forEach((ty) => {
-    defaultFilters[ty[0]] = true;
+  const buttonRef = useRef<HTMLDivElement>(null);
+  const shelfRef = useRef<HTMLDivElement>(null);
+  useClickOutside([buttonRef, shelfRef], () => {
+    uiStore.expandedRightShelf = false;
   });
 
-  function reducer(
-    state: { [key: string]: boolean },
-    action: { [key: string]: boolean }
-  ): { [key: string]: boolean } {
-    return {
-      ...state,
-      ...action,
-    };
-  }
-
-  const [filters, dispatch] = useReducer(reducer, defaultFilters);
-
-  const toggleFilter = useCallback(
-    (parkType: string) => {
-      const shown = filters[parkType];
-      const mergingState: { [key: string]: boolean } = {};
-      mergingState[parkType] = !shown;
-      dispatch(mergingState);
-    },
-    [filters]
-  );
-
-  const toggleAll = () => {
-    const mergingState: { [key: string]: boolean } = {};
-    Object.keys(parkTypes).forEach((key) => {
-      mergingState[key] = true;
-    });
-    dispatch(mergingState);
-  };
-
-  const toggleNon = () => {
-    const mergingState: { [key: string]: boolean } = {};
-    Object.keys(parkTypes).forEach((key) => {
-      mergingState[key] = false;
-    });
-    dispatch(mergingState);
-  };
-
-  const ref = useRef<HTMLDivElement>(null);
-  useClickOutside(ref, () => {
-    setExpandedMenu(false);
-  });
-
-  if (!parks) {
+  if (!parks || parks.isLoading || !parks.data) {
     return <div> Loading : ) </div>;
   }
 
   return (
-    <div className="App">
+    <div className="app">
       <header className="header">
         <nav className="navbar">
           <a href="#/" className="nav-logo">
             Nat Parks
           </a>
         </nav>
-      </header>
-      <div ref={ref}>
-        <div className={hamburgerClass}>
-          <button type="button" onClick={toggleBurger}>
+        <div
+          ref={buttonRef}
+          className={`hamburger ${expandedRightShelf ? 'active' : ''}`}
+        >
+          <button
+            type="button"
+            onClick={() => {
+              uiStore.expandedRightShelf = !uiStore.expandedRightShelf;
+            }}
+          >
             <span className="bar" />
             <span className="bar" />
             <span className="bar" />
           </button>
         </div>
-        <div className={shelfClass}>
+      </header>
+      <div ref={shelfRef}>
+        <div
+          className={`shelf-container ${expandedRightShelf ? 'active' : ''}`}
+        >
           <div className="shelf-content">
-            <div>
-              {!userAuthenticated && (
-                <>
-                  <p>
-                    Log in or create an account to start tracking your visits!
-                  </p>
-                  <LoginButton />
-                </>
-              )}
-              {userAuthenticated && <LogoutButton />}
-            </div>
-            <ParkFilter
-              filters={filters}
-              toggleFunc={toggleFilter}
-              toggleAll={toggleAll}
-              toggleNon={toggleNon}
-              parks={parks}
-            />
+            <Login />
+            <ParkFilter parks={parks.data} />
           </div>
         </div>
       </div>
-      <Map filters={filters} parks={parks} userVisits={userVisits} />
+      <Map parks={parks.data} userVisits={userVisits.data} />
       <div className="copyright-container">
-        &copy;<a href="https://shicks255.com">Steven M Hicks</a>
+        &copy;
+        <a target="_blank" href="https://shicks255.com" rel="noreferrer">
+          Steven Hicks
+        </a>
       </div>
     </div>
   );
-};
+});
 
 export default App;

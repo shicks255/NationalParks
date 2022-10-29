@@ -1,3 +1,5 @@
+import { LatLngTuple } from 'leaflet';
+import { useQuery, QueryObserverResult } from '@tanstack/react-query';
 import { ParkLocation } from './Models/Location';
 import { IUser, User } from './Models/User';
 import { UserVisit } from './Models/UserVisit';
@@ -31,16 +33,71 @@ async function getParkInfo(code: string): Promise<IDetails> {
   });
 }
 
+export function useParkInfo(
+  code: string,
+  enabled: boolean
+): QueryObserverResult<IDetails> {
+  return useQuery(['details', code], async () => getParkInfo(code), {
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 60,
+    retry: 3,
+    enabled,
+  });
+}
+
+async function getParkOutline(
+  code: string | undefined
+): Promise<LatLngTuple[][]> {
+  const response = await fetch(`${apiUrl}/api/parks/outline/${code}`);
+  const outline = response.json();
+  return outline;
+}
+
+export function useParkOutline(
+  selectedPark: ParkLocation | undefined
+): QueryObserverResult<LatLngTuple[][]> {
+  return useQuery(
+    ['outline', selectedPark?.code],
+    async () => getParkOutline(selectedPark?.code),
+    {
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 60,
+      retry: 3,
+      enabled: !!selectedPark,
+    }
+  );
+}
+
 async function getUserVisits(userId: string): Promise<UserVisit[]> {
   const response = await fetch(`${apiUrl}/api/userVisit/${userId}`);
   const visits = response.json();
   return visits;
 }
 
+export function useUserVisits(
+  userId: string,
+  enabled: boolean
+): QueryObserverResult<UserVisit[]> {
+  return useQuery([], async () => getUserVisits(userId), {
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 60,
+    retry: 3,
+    enabled,
+  });
+}
+
 async function getParks(): Promise<ParkLocation[]> {
   const response = await fetch(`${apiUrl}/api/parks`);
   const parks = response.json();
   return parks;
+}
+
+export function useParks(): QueryObserverResult<ParkLocation[]> {
+  return useQuery(['parks'], getParks, {
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 60,
+    retry: 3,
+  });
 }
 
 async function saveUserVisit(userVisit: UserVisit): Promise<IUser> {
@@ -55,4 +112,11 @@ async function saveUserVisit(userVisit: UserVisit): Promise<IUser> {
   return user;
 }
 
-export { getParks, getUser, getUserVisits, saveUserVisit, getParkInfo };
+export {
+  getParks,
+  getUser,
+  getUserVisits,
+  saveUserVisit,
+  getParkInfo,
+  getParkOutline,
+};

@@ -1,28 +1,25 @@
-import React, { Dispatch, FC, useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
+import React, { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import { ParkLocation } from '../Models/Location';
+import uiStore from '../stores/UIStore';
 
-interface IProps {
-  park: ParkLocation | null;
-  setFlyToPark: Dispatch<React.SetStateAction<ParkLocation | null>>;
-}
-
-const ParkSearch: FC<IProps> = (props) => {
-  const { park, setFlyToPark } = props;
+const ParkSearch = observer(() => {
+  const { flyToPark } = uiStore;
   const map = useMap();
 
   useEffect(() => {
     function fly(parc: ParkLocation) {
       map.flyTo([parc.latitude, parc.longitude], 11);
-      setFlyToPark(null);
+      uiStore.updateFlyToPark(undefined);
     }
 
-    if (park) {
-      fly(park);
+    if (flyToPark) {
+      fly(flyToPark);
     }
-  }, [park, map, setFlyToPark]);
+  }, [flyToPark, map]);
 
   return <></>;
-};
+});
 
 export default ParkSearch;

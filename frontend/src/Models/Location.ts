@@ -22,10 +22,10 @@ interface ILocation {
   // coords: [number, number];
   latitude: number;
   longitude: number;
-  outline: [number, number][];
+  outline: string;
   rating?: number;
   yourComment?: string;
-  yourVisit?: any;
+  yourVisit?: string;
 }
 
 class ParkLocation {
@@ -45,7 +45,7 @@ class ParkLocation {
 
   longitude: number;
 
-  outline: [number, number][];
+  outline: string;
 
   rating?: number;
 

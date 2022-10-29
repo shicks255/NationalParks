@@ -1,11 +1,11 @@
-import React, { FC, useState } from 'react';
-import { Marker, Polygon } from 'react-leaflet';
+import React, { FC, useEffect, useRef } from 'react';
+import { Marker } from 'react-leaflet';
 import L, { LatLngTuple, PointTuple } from 'leaflet';
+import { observer } from 'mobx-react-lite';
 import { ParkLocation } from '../../Models/Location';
 import { UserVisit } from '../../Models/UserVisit';
-import { getParkInfo } from '../../ParksApi';
-import ParkPopup, { IDetails } from './ParkPopup';
 import useAnalytics from '../../hooks/useAnalytics';
+import uiStore from '../../stores/UIStore';
 
 interface IProps {
   park: ParkLocation;
@@ -54,53 +54,65 @@ const getIcon: (park: ParkLocation) => MyIcon = (park) => {
   };
 };
 
-const Park: FC<IProps> = ({ park, userVisit, showOutline }: IProps) => {
+const Park: FC<IProps> = observer(({ park }: IProps) => {
   const iconAndDimension = getIcon(park);
   const ic = L.icon({
     iconUrl: iconAndDimension.url,
     iconSize: iconAndDimension.heightWidth as PointTuple,
     // iconAnchor: [0, 35],
   });
-  const { id, latitude, longitude, outline, code } = park;
+  const { id, latitude, longitude, code } = park;
+  // const outlineParsed = JSON.parse(outline);
+  // let outlineFinal = [];
+  // if (outlineParsed) {
+  //   outlineFinal = outlineParsed.map((x: number[]) => {
+  //     if (x.length > 2) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  // return x.map((xx: number[]) => [xx[1], xx[0]]);
+  // }
+  // return [x[1], x[0]];
+  // });
+  // }
   const coords: LatLngTuple = [latitude, longitude];
 
   const { sendParkClick } = useAnalytics();
-
-  const [parkDetails, setParkDetails] = useState<IDetails | undefined>(
-    undefined
-  );
+  const { selectedPark } = uiStore;
 
   function getDetails() {
     if (code) {
       sendParkClick(code);
-      getParkInfo(code).then((data) => {
-        setParkDetails(data);
-      });
     }
   }
 
+  const markerRef = useRef(null);
+  useEffect(() => {
+    if (markerRef && selectedPark && selectedPark.code === park.code) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      markerRef.current.openPopup();
+    }
+  }, [park.code, selectedPark]);
   return (
     <>
       <Marker
+        ref={markerRef}
         key={id}
         position={coords}
         icon={ic}
         eventHandlers={{
+          popupclose: () => {
+            uiStore.updateSelectedPark(undefined);
+          },
           click: () => {
+            uiStore.updateSelectedPark(park);
             getDetails();
           },
         }}
-      >
-        <ParkPopup park={park} userVisit={userVisit} details={parkDetails} />
-      </Marker>
-      {outline && showOutline && (
-        <div className="outline">
-          <Polygon positions={outline} />
-        </div>
-      )}
+      />
     </>
   );
-};
+});
 
 Park.defaultProps = {
   userVisit: {

@@ -1,7 +1,6 @@
 import React, { Dispatch, FC } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import ImageDetails from './ImageDetails';
-import CollapsibleBox from '../CollapsibleBox';
 import HoursDetails from './HoursDetails';
 import FeesDetails from './FeesDetails';
 import { ParkLocation } from '../../Models/Location';
@@ -49,25 +48,17 @@ const ParkDetails: FC<IProps> = (props) => {
         <blockquote>{details && details.description}</blockquote>
         <br />
         {details && (
-          <CollapsibleBox title="Hours">
-            <blockquote>
-              <HoursDetails details={details.operatingHours} />
-            </blockquote>
-          </CollapsibleBox>
+          <blockquote>
+            <HoursDetails details={details.operatingHours} />
+          </blockquote>
         )}
         <br />
-        {details && (
-          <CollapsibleBox title="Weather">
-            <blockquote>{details.weatherInfo}</blockquote>
-          </CollapsibleBox>
-        )}
+        {details && <blockquote>{details.weatherInfo}</blockquote>}
         <br />
         {details && (
-          <CollapsibleBox title="Cost">
-            <blockquote>
-              <FeesDetails fees={details.entranceFees} />
-            </blockquote>
-          </CollapsibleBox>
+          <blockquote>
+            <FeesDetails fees={details.entranceFees} />
+          </blockquote>
         )}
         <br />
         {/* Avg Rating {rating} */}

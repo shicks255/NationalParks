@@ -23,8 +23,13 @@ module.exports = (sequelize, Sequelize) => {
     longitude: {
       type: Sequelize.DECIMAL,
     },
+    // outline: {
+    //   type: Sequelize.ARRAY(
+    //     Sequelize.ARRAY(Sequelize.ARRAY(Sequelize.DECIMAL))
+    //   ),
+    // },
     outline: {
-      type: Sequelize.ARRAY(Sequelize.ARRAY(Sequelize.DECIMAL)),
+      type: Sequelize.TEXT,
     },
   });
 
