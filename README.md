@@ -1,6 +1,6 @@
 # NationalParks
 
-Backend:[![Build Status](https://jenkins.shicks255.com/buildStatus/icon?job=nat-parks-all)](https://jenkins.shicks255.com/job/nat-parks-all/)
+Backend:[![Build Status](https://jenkins.shicks255.com/buildStatus/icon?job=NatParksPipeline)](https://jenkins.shicks255.com/job/NatParksPipeline/)
 
 To run the backend
 cd /server
