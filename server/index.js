@@ -154,7 +154,7 @@ app.get("/api/parks/outline/:parkId", (req, res) => {
         res.json(outlineFinal);
         console.log(parsed);
       }
-      res.json({});
+      res.end();
     });
 });
 
