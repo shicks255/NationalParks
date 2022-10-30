@@ -10,5 +10,5 @@ RUN npm ci
 
 ENV NODE_ENV=production
 
-EXPOSE 8484
+EXPOSE 8383
 CMD ["node", "index.js"]

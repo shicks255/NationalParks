@@ -11,7 +11,7 @@ const fs = require("fs");
 require("dotenv").config();
 
 const API_TOKEN = process.env.API_TOKEN;
-const PORT = process.env.PORT || 8484;
+const PORT = process.env.PORT || 8383;
 const app = express();
 
 app.use(
