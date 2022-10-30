@@ -11,7 +11,7 @@ const fs = require("fs");
 require("dotenv").config();
 
 const API_TOKEN = process.env.API_TOKEN;
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8484;
 const app = express();
 
 app.use(
@@ -95,47 +95,6 @@ db.sequelize.sync({ force: true }).then(() => {
     }
   });
 
-  const arches = {
-    name: "Arches National Park",
-    type: "PARK",
-    state: "UT",
-    latitude: 38.70791763,
-    longitude: -109.595456,
-  };
-
-  const bryce = {
-    name: "Bryce Canyon National Park",
-    type: "PARK",
-    state: "UT",
-    latitude: 37.58399144,
-    longitude: -112.1826689,
-  };
-
-  const zion = {
-    name: "Zion National Park",
-    type: "PARK",
-    state: "AZ",
-    latitude: 37.318099,
-    longitude: -113.029996,
-  };
-  // db.park.create(bryce);
-  // db.park.create(arches);
-  // db.park.create(zion);
-
-  // const newUser = {
-  //   id: 1,
-  //   userName: "shicks255",
-  // };
-  // db.user.create(newUser);
-
-  // const userVisit = {
-  //   userId: 1,
-  //   parkId: 1,
-  //   visited: "10/3/2021",
-  //   comment: "Good Times",
-  //   rating: 4.0,
-  // };
-  // db.user_visit.create(userVisit);
 });
 
 app.get("/api/hello", (req, res) => {
@@ -183,17 +142,19 @@ app.get("/api/parks/outline/:parkId", (req, res) => {
       attributes: ["outline"],
     })
     .then((data) => {
-      const parsed = JSON.parse(data.outline);
-
-      const outlineFinal = parsed.map((x) => {
-        if (x.length > 2) {
-          return x.map((xx) => [xx[1], xx[0]]);
-        }
-        return [x[1], x[0]];
-      });
-
-      res.json(outlineFinal);
-      console.log(parsed);
+      if (data && data.outline) {
+        const parsed = JSON.parse(data.outline);
+        const outlineFinal = parsed.map((x) => {
+          if (x.length > 2) {
+            return x.map((xx) => [xx[1], xx[0]]);
+          }
+          return [x[1], x[0]];
+        });
+        
+        res.json(outlineFinal);
+        console.log(parsed);
+      }
+      res.json({});
     });
 });
 
