@@ -53,7 +53,7 @@ const ParkFilter: React.FC<IProps> = observer((props: IProps) => {
     return (
       <tr key={parkType}>
         <td colSpan={2}>
-          <div className="align-left">
+          <div className="align-left tab-cell">
             <label htmlFor={parkType}>
               <input
                 key={parkType}
@@ -61,6 +61,7 @@ const ParkFilter: React.FC<IProps> = observer((props: IProps) => {
                 checked={filters[parkType]}
                 id={parkType}
                 type="checkbox"
+                className="checkbox"
               />
               {parkTypeName} <i>({parkTypeCountsMap[parkType]})</i>
             </label>

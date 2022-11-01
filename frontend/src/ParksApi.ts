@@ -11,7 +11,7 @@ const env = process.env.NODE_ENV;
 const apiUrl =
   env === 'production'
     ? 'https://parksapi.shicks255.com'
-    : 'http://localhost:3001';
+    : 'http://localhost:8383';
 
 function getUser(): User {
   return new User({

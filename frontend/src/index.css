@@ -74,6 +74,21 @@ table td {
   z-index: 401;
 }
 
+.checkbox {
+  vertical-align: middle;
+  position: relative;
+  margin-right: 4px;
+  bottom: 1px;
+}
+
+.tab-cell {
+  display: table-cell;
+  height: 15px;
+  vertical-align: middle;
+  font-size: 12px;
+  font-weight: 500;
+}
+
 .hamburger {
   position: absolute;
   top: 2px;
@@ -207,9 +222,18 @@ table td {
   padding-top: 2rem;
 }
 
+.invisible-button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
 /* Filters inside Shelf */
 .filter-table {
   margin-left: 12px;
+  margin-bottom: 36px;
   padding-bottom: 36px;
 }
 
