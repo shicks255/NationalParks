@@ -12,6 +12,7 @@ import { useParkOutline } from '../ParksApi';
 import ParkSearcher from './ParkSearcher';
 import ParkDetailsShelf from './ParkDetailsShelf';
 import uiStore from '../stores/UIStore';
+import useIsMobile from '../hooks/useIsMobile';
 
 interface IProps {
   parks: ParkLocation[];
@@ -41,6 +42,7 @@ const Map: FC<IProps> = observer((props: IProps) => {
   });
 
   const parkOutline = useParkOutline(selectedPark);
+  const isMobile = useIsMobile();
 
   return (
     <div>
@@ -48,7 +50,11 @@ const Map: FC<IProps> = observer((props: IProps) => {
         <ParkSearcher parks={parks} />
       </div>
       {selectedPark && <ParkDetailsShelf selectedPark={selectedPark} />}
-      <div className={`leaflet-container ${selectedPark ? 'active' : ''}`}>
+      <div
+        className={`leaflet-container ${
+          selectedPark && !isMobile ? 'active' : ''
+        }`}
+      >
         <MapContainer
           maxZoom={13}
           minZoom={3}

@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import React from 'react';
+import useIsMobile from '../hooks/useIsMobile';
 import { ParkLocation } from '../Models/Location';
 import { useParkInfo } from '../ParksApi';
 import FeesDetails from './Park/FeesDetails';
@@ -14,12 +15,16 @@ const ParkDetailsShelf: React.FC<IProps> = ({ selectedPark }: IProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { user } = useAuth0();
 
+  const isMobile = useIsMobile();
+  console.log(isMobile);
+  const shelfClass = isMobile
+    ? 'mobile-shelf-container'
+    : 'left-shelf-container';
+
   const parkDetails = useParkInfo(selectedPark.code, true);
 
   if (!parkDetails) {
-    return (
-      <div className={`left-shelf-container ${selectedPark ? 'active' : ''}`} />
-    );
+    return <div className={`${shelfClass} ${selectedPark ? 'active' : ''}`} />;
   }
 
   const selectedParkDetails = parkDetails.data;
@@ -29,7 +34,7 @@ const ParkDetailsShelf: React.FC<IProps> = ({ selectedPark }: IProps) => {
   }
 
   return (
-    <div className={`left-shelf-container ${selectedPark ? 'active' : ''}`}>
+    <div className={`${shelfClass} ${selectedPark ? 'active' : ''}`}>
       <div className="left-shelf-content">
         <h1>
           {selectedParkDetails?.fullName}{' '}
