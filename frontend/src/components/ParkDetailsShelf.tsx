@@ -16,7 +16,6 @@ const ParkDetailsShelf: React.FC<IProps> = ({ selectedPark }: IProps) => {
   const { user } = useAuth0();
 
   const isMobile = useIsMobile();
-  console.log(isMobile);
   const shelfClass = isMobile
     ? 'mobile-shelf-container'
     : 'left-shelf-container';
