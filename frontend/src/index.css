@@ -159,14 +159,13 @@ table td {
 
 .mobile-shelf-container {
   position: absolute;
-  top: 300px;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 50%;
+  height: 65%;
   z-index: 996;
   background-color: white;
   overflow-y: auto;
-  margin-bottom: 200px;
 }
 
 .left-shelf-container {
