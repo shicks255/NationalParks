@@ -166,6 +166,9 @@ table td {
   z-index: 996;
   background-color: white;
   overflow-y: auto;
+  box-shadow: 0px -5px 72px -40px #000;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
 }
 
 .left-shelf-container {
@@ -334,7 +337,32 @@ blockquote {
   width: 35px;
   border: none;
   cursor: pointer;
+  background: none;
 }
+
+.relative {
+  position: relative;
+}
+
+.image-button.mobile {
+  border: none;
+  background: white;
+  border-radius: 50px;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  z-index: 999;
+  top: 50%;
+}
+
+.image-button.mobile.left {
+  left: 10px;
+}
+
+.image-button.mobile.right {
+  right: 10px;
+}
+
 
 .left-space > * {
   margin-left: 10px;

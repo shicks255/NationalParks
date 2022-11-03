@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import useIsMobile from '../../hooks/useIsMobile';
 import { IParkImage } from './ParkPopup';
 
 interface IProps {
@@ -38,13 +39,15 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
     }
   }
 
+  const isMobile = useIsMobile();
+
   return (
-    <>
+    <div className="relative">
       <br />
       <button
         disabled={isFirstImage()}
         type="button"
-        className="image-button"
+        className={`image-button ${isMobile ? 'mobile left' : ''}`}
         onClick={slideLeft}
       >
         &#10094;
@@ -52,7 +55,7 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
       <button
         disabled={isLastImage()}
         type="button"
-        className="image-button"
+        className={`image-button ${isMobile ? 'mobile right' : ''}`}
         onClick={slideRight}
       >
         &#10095;
@@ -93,7 +96,7 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
 
