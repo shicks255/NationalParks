@@ -1,5 +1,4 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { ReactionCleanupTracking } from 'mobx-react-lite/dist/utils/reactionCleanupTrackingCommon';
 import React, { useState } from 'react';
 import useIsMobile from '../hooks/useIsMobile';
 import { ParkLocation } from '../Models/Location';
@@ -51,7 +50,7 @@ const ParkDetailsShelf: React.FC<IProps> = ({ selectedPark }: IProps) => {
     if (touchStart) {
       const x = e.changedTouches[0].clientY;
       const totalDistanceMoved = touchStart - x;
-      setBottom((curr) => {
+      setBottom(() => {
         if (!position) {
           return totalDistanceMoved;
         }
