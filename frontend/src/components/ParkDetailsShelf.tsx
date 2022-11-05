@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import React from 'react';
+import { ReactionCleanupTracking } from 'mobx-react-lite/dist/utils/reactionCleanupTrackingCommon';
+import React, { useState } from 'react';
 import useIsMobile from '../hooks/useIsMobile';
 import { ParkLocation } from '../Models/Location';
 import { useParkInfo } from '../ParksApi';
@@ -14,6 +15,12 @@ interface IProps {
 const ParkDetailsShelf: React.FC<IProps> = ({ selectedPark }: IProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { user } = useAuth0();
+
+  const [bottom, setBottom] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | undefined>(undefined);
+  const [position, setPosition] = useState<undefined | 'down' | 'up'>(
+    undefined
+  );
 
   const isMobile = useIsMobile();
   const shelfClass = isMobile
@@ -32,9 +39,76 @@ const ParkDetailsShelf: React.FC<IProps> = ({ selectedPark }: IProps) => {
     return null;
   }
 
+  const start: React.TouchEventHandler<HTMLDivElement> = (
+    e: React.TouchEvent<HTMLDivElement>
+  ) => {
+    e.preventDefault();
+    setTouchStart(e.changedTouches[0].clientY);
+  };
+
+  const move = (e: React.TouchEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (touchStart) {
+      const x = e.changedTouches[0].clientY;
+      const totalDistanceMoved = touchStart - x;
+      setBottom((curr) => {
+        if (!position) {
+          return totalDistanceMoved;
+        }
+        if (position === 'up') {
+          return 200 + totalDistanceMoved;
+        }
+
+        return -300 + totalDistanceMoved;
+      });
+    }
+  };
+
+  const end = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (touchStart) {
+      const x = e.changedTouches[0].clientY;
+      const distMoved = x - touchStart;
+      if (Math.abs(distMoved) > 75) {
+        if (distMoved > 0) {
+          if (!position) {
+            setPosition('down');
+            setBottom(-300);
+          }
+          if (position === 'up') {
+            setPosition(undefined);
+            setBottom(0);
+          }
+        } else {
+          if (!position) {
+            setPosition('up');
+            setBottom(200);
+          }
+          if (position === 'down') {
+            setPosition(undefined);
+            setBottom(0);
+          }
+        }
+      } else {
+        setBottom(0);
+        setPosition(undefined);
+      }
+      setTouchStart(x);
+    }
+  };
+
   return (
-    <div className={`${shelfClass} ${selectedPark ? 'active' : ''}`}>
-      {isMobile && <div className="shelf-handle" />}
+    <div
+      style={{ bottom }}
+      className={`${shelfClass} ${selectedPark ? 'active' : ''}`}
+    >
+      {isMobile && (
+        <div
+          onTouchStart={start}
+          onTouchEnd={end}
+          onTouchMove={move}
+          className="shelf-handle"
+        />
+      )}
       <div className="left-shelf-content">
         <h1>
           {selectedParkDetails?.fullName}{' '}
