@@ -34,6 +34,7 @@ const ParkDetailsShelf: React.FC<IProps> = ({ selectedPark }: IProps) => {
 
   return (
     <div className={`${shelfClass} ${selectedPark ? 'active' : ''}`}>
+      {isMobile && <div className="shelf-handle" />}
       <div className="left-shelf-content">
         <h1>
           {selectedParkDetails?.fullName}{' '}

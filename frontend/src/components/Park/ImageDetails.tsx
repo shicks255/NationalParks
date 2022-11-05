@@ -47,7 +47,7 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
       <button
         disabled={isFirstImage()}
         type="button"
-        className={`image-button ${isMobile ? 'mobile left' : ''}`}
+        className={`image-button left ${isMobile ? 'mobile' : ''}`}
         onClick={slideLeft}
       >
         &#10094;
@@ -55,7 +55,7 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
       <button
         disabled={isLastImage()}
         type="button"
-        className={`image-button ${isMobile ? 'mobile right' : ''}`}
+        className={`image-button right ${isMobile ? 'mobile' : ''}`}
         onClick={slideRight}
       >
         &#10095;
@@ -74,16 +74,13 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
                   {dedupedImages.map((pic, ii) => {
                     if (ii + 1 === shownImage) {
                       return (
-                        <div key={`dot_${pic.url}`} className="image-dot">
-                          &#10029;
-                        </div>
+                        <div
+                          key={`dot_${pic.url}`}
+                          className="image-dot active"
+                        />
                       );
                     }
-                    return (
-                      <div key={`dot_${pic.url}`} className="image-dot">
-                        &#10032;
-                      </div>
-                    );
+                    return <div key={`dot_${pic.url}`} className="image-dot" />;
                   })}
                 </div>
                 <hr />
