@@ -80,7 +80,7 @@ const ParkDetailsShelf: React.FC<IProps> = ({ selectedPark }: IProps) => {
         if (distMoved < 0) {
           if (!position) {
             setPosition('down');
-            setTop(500);
+            setTop(window.innerHeight - 72);
           }
           if (position === 'up') {
             setPosition(undefined);
