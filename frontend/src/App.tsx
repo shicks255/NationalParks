@@ -51,15 +51,17 @@ const App: FC = observer(() => {
       </header>
       <div ref={shelfRef}>
         <div
-          className={`shelf-container ${expandedRightShelf ? 'active' : ''}`}
+          className={`right-shelf-container ${
+            expandedRightShelf ? 'active' : ''
+          }`}
         >
-          <div className="shelf-content">
+          <div className="right-shelf-content">
             <Login />
             <ParkFilter parks={parks.data} />
           </div>
         </div>
       </div>
-      <Map parks={parks.data} userVisits={userVisits.data} />
+      <Map parks={parks.data} userVisits={userVisits.data} />,
       <div className="copyright-container">
         &copy;
         <a target="_blank" href="https://shicks255.com" rel="noreferrer">

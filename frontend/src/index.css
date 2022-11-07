@@ -171,14 +171,18 @@ table td {
   border-top-left-radius: 20px;
 }
 
-.shelf-handle-container {
+.mobile-shelf-container.moving {
+  transition: all 0.25s;
+}
+
+.mobile-shelf-handle-container {
   margin-bottom: 8px;
   background-color: white;
   padding: 12px;
   touch-action: none;
 }
 
-.shelf-handle {
+.mobile-shelf-handle {
   width: 50px;
   height: 6px;
   margin: auto;
@@ -196,12 +200,12 @@ table td {
   left: -225px;
   height: 100%;
   background-color: white;
-  width: 0;
+  width: 10px;
   z-index: 1096;
   overflow-y: auto;
   scrollbar-gutter: stable;
-  -webkit-transition: all 2s ease-in-out;
-  transition: all 2s ease-in-out;
+  /* -webkit-transition: all 2s ease-in-out; */
+  /* transition: all 2s ease-in-out; */
 }
 
 .left-shelf-container.active {
@@ -229,12 +233,12 @@ table td {
   text-align: center;
 }
 
-.shelf-container {
+.right-shelf-container {
   position: absolute;
   top: 36px;
   right: -100px;
   background-color: white;
-  z-index: 1098;
+  z-index: 2000;
   height: 100%;
   width: 0;
   -webkit-transition: all 0.3s ease-in-out;
@@ -242,14 +246,14 @@ table td {
   overflow-y: scroll;
 }
 
-.shelf-container.active {
+.right-shelf-container.active {
   right: 1px;
   display: block;
   height: 100%;
   width: 27%;
 }
 
-.shelf-content {
+.right-shelf-content {
   padding-top: 2rem;
 }
 
@@ -539,7 +543,7 @@ blockquote {
 }
 
 @media only screen and (max-width: 768px) {
-  .shelf-container.active {
+  .right-shelf-container.active {
     width: 55%;
   }
 

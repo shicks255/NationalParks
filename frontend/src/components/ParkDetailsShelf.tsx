@@ -20,22 +20,22 @@ const ParkDetailsShelf: React.FC<IProps> = ({ selectedPark }: IProps) => {
   const [position, setPosition] = useState<undefined | 'down' | 'up'>(
     undefined
   );
-
-  const getHeight = () =>
-    // if (!position) {
-    //   return window.innerHeight / 2;
-    // }
-
-    // if (position === 'up') {
-    //   return `${window.innerHeight - 36}px`;
-    // }
-
-    window.innerHeight - top;
-
+  const [isMoving, setIsMoving] = useState(false);
   const isMobile = useIsMobile();
-  const shelfClass = isMobile
-    ? 'mobile-shelf-container'
-    : 'left-shelf-container';
+
+  const getHeight = () => window.innerHeight - top;
+
+  const getMiddleTop = () => window.innerHeight * 0.4;
+
+  const getTopTop = () => 36;
+
+  const getBottomTop = () => window.innerHeight - 72;
+
+  let shelfClass = isMobile ? 'mobile-shelf-container' : 'left-shelf-container';
+
+  if (isMoving) {
+    shelfClass += ' moving';
+  }
 
   const parkDetails = useParkInfo(selectedPark.code, true);
 
@@ -58,65 +58,88 @@ const ParkDetailsShelf: React.FC<IProps> = ({ selectedPark }: IProps) => {
   const move = (e: React.TouchEvent<HTMLDivElement>) => {
     if (touchStart) {
       const x = e.changedTouches[0].clientY;
+
+      if (x > window.innerHeight - 72) {
+        return;
+      }
+      if (x < 50) {
+        return;
+      }
+
       const totalDistanceMoved = x - touchStart;
       setTop(() => {
         if (!position) {
-          return window.innerHeight / 2 + totalDistanceMoved;
+          return getMiddleTop() + totalDistanceMoved;
         }
         if (position === 'up') {
-          return 36 + totalDistanceMoved;
+          return getTopTop() + totalDistanceMoved;
         }
 
-        return 500 + totalDistanceMoved;
+        return getBottomTop() + totalDistanceMoved;
       });
     }
   };
 
   const end = (e: React.TouchEvent<HTMLDivElement>) => {
+    setIsMoving(true);
+
     if (touchStart) {
       const x = e.changedTouches[0].clientY;
       const distMoved = touchStart - x;
       if (Math.abs(distMoved) > 75) {
         if (distMoved < 0) {
+          // going down
           if (!position) {
             setPosition('down');
-            setTop(window.innerHeight - 72);
+            setTop(getBottomTop());
           }
           if (position === 'up') {
             setPosition(undefined);
-            setTop(window.innerHeight / 2);
+            setTop(getMiddleTop());
           }
         } else {
+          // going up
           if (!position) {
             setPosition('up');
-            setTop(36);
+            setTop(getTopTop());
           }
           if (position === 'down') {
             setPosition(undefined);
-            setTop(window.innerHeight / 2);
+            setTop(getMiddleTop());
           }
         }
       } else {
-        setTop(window.innerHeight / 2);
-        setPosition(undefined);
+        if (!position) {
+          setTop(getMiddleTop());
+          setPosition(undefined);
+        }
+        if (position === 'down') {
+          setTop(getBottomTop());
+        }
+        if (position === 'up') {
+          setTop(getTopTop());
+        }
       }
       setTouchStart(x);
     }
+    setTimeout(() => {
+      setIsMoving(false);
+    }, 500);
   };
 
   return (
     <div
-      style={{ top, height: getHeight() }}
+      style={isMobile ? { top, height: getHeight() } : {}}
       className={`${shelfClass} ${selectedPark ? 'active' : ''}`}
     >
       {isMobile && (
         <div
-          className="shelf-handle-container"
+          className="mobile-shelf-handle-container"
           onTouchStart={start}
           onTouchEnd={end}
           onTouchMove={move}
         >
-          <div className="shelf-handle" />
+          <div className="mobile-shelf-handle" />
         </div>
       )}
       <div className="left-shelf-content">
