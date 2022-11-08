@@ -73,23 +73,17 @@ const ParkFilter: React.FC<IProps> = observer((props: IProps) => {
 
   return (
     <>
+      <h1>Park Types</h1>
+      <div className="button-group">
+        <button type="button" className="button" onClick={selectAll}>
+          Check All
+        </button>
+        <button type="button" className="button" onClick={selectNone}>
+          Uncheck All
+        </button>
+      </div>
       <table className="filter-table">
         <tbody>
-          <tr>
-            <td className="option-label">Park Types</td>
-          </tr>
-          <tr>
-            <td>
-              <button type="button" onClick={selectAll}>
-                Check All
-              </button>
-            </td>
-            <td>
-              <button type="button" onClick={selectNone}>
-                Uncheck All
-              </button>
-            </td>
-          </tr>
           <tr>
             <td className="left-space filter-type" colSpan={2}>
               <img

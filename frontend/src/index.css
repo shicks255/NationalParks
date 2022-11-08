@@ -89,13 +89,6 @@ table td {
   font-weight: 500;
 }
 
-.hamburger {
-  position: absolute;
-  top: 2px;
-  right: 15px;
-  z-index: 1099;
-}
-
 .bar {
   display: block;
   width: 25px;
@@ -130,6 +123,19 @@ table td {
   font-size: 2.1rem;
   font-weight: 500;
   color: #482ff7;
+}
+
+.hamburger {
+  position: absolute;
+  top: 2px;
+  right: 15px;
+  z-index: 1099;
+}
+
+.hamburger button {
+  background-color: #f7f2f2;
+  border: none;
+  cursor: pointer;
 }
 
 .hamburger.active .bar:nth-child(2) {
@@ -204,8 +210,6 @@ table td {
   z-index: 1096;
   overflow-y: auto;
   scrollbar-gutter: stable;
-  /* -webkit-transition: all 2s ease-in-out; */
-  /* transition: all 2s ease-in-out; */
 }
 
 .left-shelf-container.active {
@@ -250,11 +254,11 @@ table td {
   right: 1px;
   display: block;
   height: 100%;
-  width: 27%;
+  width: 330px;
 }
 
 .right-shelf-content {
-  padding-top: 2rem;
+  padding: 2rem;
 }
 
 .invisible-button {
@@ -267,8 +271,10 @@ table td {
 
 /* Filters inside Shelf */
 .filter-table {
-  margin-left: 12px;
+  width: 260px;
+  margin: auto;
   margin-bottom: 36px;
+  padding: 12px;
   padding-bottom: 36px;
 }
 
@@ -276,13 +282,15 @@ table td {
   text-align: left;
 }
 
-.filter-table button {
+.button {
   border-radius: 12px;
   background-color: rgb(50 50 203);
   color: white;
   border: none;
-  padding: 15px;
+  padding: 12px;
+  font-weight: 600;
   cursor: pointer;
+  margin: 1em;
 }
 
 .filter-table button:hover {
@@ -300,13 +308,18 @@ table td {
   display: inline-block;
 }
 
+.filter-table label {
+  font-size: 14px;
+}
+
 .option-label {
   font-weight: bold;
 }
 
 .filter-type {
   font-weight: bold;
-  padding: 5px;
+  padding: 20px 5px 0;
+  margin-top: 5px;
 }
 
 /* Popup Content */
@@ -542,7 +555,7 @@ blockquote {
   padding: 0 5px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 640px) {
   .right-shelf-container.active {
     width: 55%;
   }
