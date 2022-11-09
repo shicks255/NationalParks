@@ -70,7 +70,7 @@ const ParkSearcher: React.FC<IProps> = observer(({ parks }: IProps) => {
                   ))}
                   {searchFilterParks.length > 5 && (
                     <tr className="non-hover">
-                      <td>...</td>
+                      <td colSpan={2}>...</td>
                     </tr>
                   )}
                 </tbody>
@@ -88,7 +88,6 @@ const ParkSearcher: React.FC<IProps> = observer(({ parks }: IProps) => {
             </div>
           )}
         </div>
-        ;
       </IconContext.Provider>
     </>
   );

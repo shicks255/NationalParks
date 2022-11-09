@@ -271,10 +271,10 @@ table td {
 
 /* Filters inside Shelf */
 .filter-table {
-  width: 260px;
+  width: 100%;
   margin: auto;
   margin-bottom: 36px;
-  padding: 12px;
+  padding: 4px 12px;
   padding-bottom: 36px;
 }
 
@@ -481,7 +481,6 @@ blockquote {
 }
 
 .park-search-box input {
-  margin-left: 5px;
   border-top: 0;
   border-left: 0;
   border-right: 0;
@@ -491,22 +490,31 @@ blockquote {
   text-align: left;
 }
 
+.park-search-box input:disabled {
+  background-color: rgba(230 227 227 35%);
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  padding: 10px;
+  cursor: not-allowed;
+}
+
 .park-search-box {
   position: absolute;
   top: 50px;
-  left: 25px;
+  left: 17px;
   background-color: white;
   z-index: 1097;
   line-height: 10px;
   border-radius: 10px;
   box-shadow: 5px 5px 13px -10px #000;
+  padding: 8px;
 }
 
 .search-icon {
   display: inline-block;
   top: 10px;
-  left: 0;
-  position: relative;
+  left: 4px;
+  position: absolute;
 }
 
 .park-search-results {
@@ -525,10 +533,16 @@ blockquote {
   cursor: pointer;
   height: 30px;
   width: 100%;
+  padding: 2px;
 }
 
 .park-search-results td {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgb(64 135 64 / 48%);
+  padding: 4px;
+}
+
+.park-search-results tr:last-child td {
+  border: none;
 }
 
 .park-search-results tr:hover {
@@ -558,6 +572,10 @@ blockquote {
 @media only screen and (max-width: 640px) {
   .right-shelf-container.active {
     width: 55%;
+  }
+
+  .right-shelf-content {
+    padding: 4px;
   }
 
   .nav-menu {
