@@ -70,7 +70,7 @@ table td {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
-  height: 35px;
+  height: 55px;
   z-index: 401;
 }
 
@@ -122,12 +122,12 @@ table td {
 .nav-logo {
   font-size: 2.1rem;
   font-weight: 500;
-  color: #482ff7;
+  color: rgb(34 94 34);
 }
 
 .hamburger {
   position: absolute;
-  top: 2px;
+  top: 14px;
   right: 15px;
   z-index: 1099;
 }
@@ -200,7 +200,7 @@ table td {
 
 .left-shelf-container {
   position: absolute;
-  top: 36px;
+  top: 56px;
   padding-top: 75px;
   margin-bottom: 36px;
   left: -225px;
@@ -239,7 +239,7 @@ table td {
 
 .right-shelf-container {
   position: absolute;
-  top: 36px;
+  top: 56px;
   right: -100px;
   background-color: white;
   z-index: 2000;
@@ -392,23 +392,32 @@ blockquote {
   position: relative;
 }
 
+.image-box {
+  position: absolute;
+  top: 40%;
+  z-index: 1099;
+  height: 45px;
+  width: 45px;
+  cursor: pointer;
+  border-radius: 50px;
+}
+
 .image-button {
+  position: relative;
+  top: 8px;
   border: none;
   background: white;
   border-radius: 50px;
   height: 30px;
   width: 30px;
-  position: absolute;
-  z-index: 1099;
-  top: 40%;
   cursor: pointer;
 }
 
-.image-button.left {
+.image-box.left {
   left: 10px;
 }
 
-.image-button.right {
+.image-box.right {
   right: 10px;
 }
 
@@ -500,7 +509,7 @@ blockquote {
 
 .park-search-box {
   position: absolute;
-  top: 50px;
+  top: 70px;
   left: 17px;
   background-color: white;
   z-index: 1097;
@@ -534,6 +543,8 @@ blockquote {
   height: 30px;
   width: 100%;
   padding: 2px;
+  font-size: small;
+  font-weight: 500;
 }
 
 .park-search-results td {
@@ -545,18 +556,28 @@ blockquote {
   border: none;
 }
 
-.park-search-results tr:hover {
-  background-color: grey;
+.park-search-results td:last-child:hover {
+  background-color: rgb(94 121 85);
+  color: white;
+  border-radius: 8px;
 }
 
 .park-search-results .non-hover {
   cursor: auto;
 }
 
+.park-search-results-icon {
+  width: 25px;
+}
+
 /* Sets Zoom Control */
 .leaflet-top,
 .leaflet-bottom {
   position: fixed !important;
+}
+
+.leaflet-control-zoom {
+  margin-bottom: 72px !important;
 }
 
 .copyright-container {
@@ -603,7 +624,7 @@ blockquote {
     display: block;
     cursor: pointer;
     position: absolute;
-    top: 2px;
+    top: 12px;
     right: 15px;
     z-index: 1099;
   }

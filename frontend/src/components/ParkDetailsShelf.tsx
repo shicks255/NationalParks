@@ -15,7 +15,7 @@ const ParkDetailsShelf: React.FC<IProps> = ({ selectedPark }: IProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { user } = useAuth0();
 
-  const [top, setTop] = useState(window.innerHeight / 2);
+  const [top, setTop] = useState(window.innerHeight * 0.4);
   const [touchStart, setTouchStart] = useState<number | undefined>(undefined);
   const [position, setPosition] = useState<undefined | 'down' | 'up'>(
     undefined
@@ -27,7 +27,7 @@ const ParkDetailsShelf: React.FC<IProps> = ({ selectedPark }: IProps) => {
 
   const getMiddleTop = () => window.innerHeight * 0.4;
 
-  const getTopTop = () => 36;
+  const getTopTop = () => 56;
 
   const getBottomTop = () => window.innerHeight - 72;
 

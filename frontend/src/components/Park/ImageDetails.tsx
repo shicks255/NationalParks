@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { FC, useState } from 'react';
 import useIsMobile from '../../hooks/useIsMobile';
 import { IParkImage } from './ParkPopup';
@@ -44,22 +45,34 @@ const ImageDetails: FC<IProps> = (props: IProps) => {
   return (
     <div className="relative">
       <br />
-      <button
-        disabled={isFirstImage()}
-        type="button"
-        className={`image-button left ${isMobile ? 'mobile' : ''}`}
+      <div
+        tabIndex={0}
+        role="button"
         onClick={slideLeft}
+        className="image-box left"
       >
-        &#10094;
-      </button>
-      <button
-        disabled={isLastImage()}
-        type="button"
-        className={`image-button right ${isMobile ? 'mobile' : ''}`}
+        <button
+          disabled={isFirstImage()}
+          type="button"
+          className={`image-button left ${isMobile ? 'mobile' : ''}`}
+        >
+          &#10094;
+        </button>
+      </div>
+      <div
+        tabIndex={0}
+        role="button"
         onClick={slideRight}
+        className="image-box right"
       >
-        &#10095;
-      </button>
+        <button
+          disabled={isLastImage()}
+          type="button"
+          className={`image-button right ${isMobile ? 'mobile' : ''}`}
+        >
+          &#10095;
+        </button>
+      </div>
       {dedupedImages.map((img, i) => {
         const imageClass = i + 1 === shownImage ? 'shown-image' : 'hide-image';
         return (

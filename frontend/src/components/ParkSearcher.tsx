@@ -1,3 +1,4 @@
+import { values } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { FaSearchLocation } from 'react-icons/fa';
@@ -53,7 +54,7 @@ const ParkSearcher: React.FC<IProps> = observer(({ parks }: IProps) => {
                         uiStore.searchTextFocused = false;
                       }}
                     >
-                      <td>
+                      <td className="park-search-results-icon">
                         <span>
                           <img
                             height={25}
@@ -64,7 +65,11 @@ const ParkSearcher: React.FC<IProps> = observer(({ parks }: IProps) => {
                         </span>
                       </td>
                       <td>
-                        <span>{loc.name}</span>
+                        <span>
+                          {loc.name.length > 35
+                            ? `${loc.name.substring(0, 34)}...`
+                            : loc.name}
+                        </span>
                       </td>
                     </tr>
                   ))}
