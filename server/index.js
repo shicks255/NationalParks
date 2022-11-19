@@ -7,6 +7,7 @@ const promBundle = require("express-prom-bundle");
 const logger = require("./config/logger");
 const dirTree = require("directory-tree");
 const fs = require("fs");
+const { randomUUID } = require("crypto");
 
 require("dotenv").config();
 
@@ -104,7 +105,8 @@ app.get("/api/hello", (req, res) => {
 
 app.get("/api/parks", (req, res) => {
   const start = new Date().getTime();
-  logger.info("Request", { path: "/api/parks", method: "GET", stage: "start" });
+  const traceId = randomUUID()
+  logger.info("Request", { path: "/api/parks", method: "GET", stage: "start", traceId: traceId });
   db.park
     .findAll({
       attributes: [
@@ -126,6 +128,7 @@ app.get("/api/parks", (req, res) => {
         stage: "end",
         latency: latency,
         result: data.slice(0, 3),
+        traceId: traceId
       });
     });
 });
@@ -161,10 +164,13 @@ app.get("/api/parks/outline/:parkId", (req, res) => {
 app.get("/api/parkDetails/:parkId", (req, res) => {
   const { parkId } = req.params;
   const start = new Date().getTime();
+    const traceId = randomUUID()
+
   logger.info("Request", {
     path: "/api/parks",
     args: { parkId: "`${parkId}`" },
     stage: "start",
+    traceId: traceId
   });
   const npsUrl = `https://developer.nps.gov/api/v1/parks?parkCode=${parkId}&api_key=${API_TOKEN}`;
   fetch(npsUrl).then((res) => {
@@ -177,11 +183,13 @@ app.get("/api/parkDetails/:parkId", (req, res) => {
 app.get("/api/userVisit/:userId", (req, res) => {
   const { userId } = req.params;
   const start = new Date().getTime();
+  const traceId = randomUUID()
   logger.info("Request", {
     path: "/api/userVisits",
     method: "GET",
     args: { userId: `"${userId}"` },
     stage: "start",
+    traceId: traceId
   });
 
   db.user_visit.findAll({ userId: userId }).then((data) => {
@@ -193,6 +201,7 @@ app.get("/api/userVisit/:userId", (req, res) => {
       stage: "end",
       latency: latency,
       result: data.slice(0, 3),
+      traceId: traceId
     });
   });
 });
@@ -204,6 +213,7 @@ app.post("/api/userVisit", (req, res) => {
     ...userVisit,
     rating: parseInt(userVisit.rating),
   };
+  const traceId = randomUUID()
 
   const start = new Date().getTime();
   logger.info("Request", {
@@ -211,6 +221,7 @@ app.post("/api/userVisit", (req, res) => {
     method: "GET",
     args: { userId: `"${userId}"` },
     stage: "start",
+    traceId: traceId
   });
 
   db.user_visit.create(sanitizedVisit).then((data) => {
@@ -222,6 +233,7 @@ app.post("/api/userVisit", (req, res) => {
       stage: "end",
       latency: latency,
       result: "test",
+      traceId: traceId
     });
   });
 
