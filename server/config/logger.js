@@ -25,7 +25,8 @@ function something(info) {
         }
         baseLogMessage += `, "${ent[0]}": ${JSON.stringify(ent[1])}`;
       } else {
-        baseLogMessage += `, "${ent[0]}":"${ent[1]}"`;
+        const value = isNaN(ent[1]) ?  `"${ent[1]}"` : ent[1]
+        baseLogMessage += `, "${ent[0]}":` + value;
       }
     }
   });
